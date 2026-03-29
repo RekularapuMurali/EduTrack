@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
-const BRAND_GREEN = '#336339';
-const BRAND_GREEN_HOVER = '#2a5230';
+const DARK_BG = '#3A0519';
+const BRAND_PRIMARY = '#670D2F';
+const BRAND_HOVER = '#A53860';
+const BRAND_ACCENT = '#EF88AD';
 
 function GradCapIcon({ className }) {
   return (
@@ -49,74 +51,74 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Left panel — brand */}
+
+      {/* Left panel */}
       <div
         className="flex flex-col justify-between w-full lg:w-[30%] px-8 py-10 sm:px-12 sm:py-12 lg:min-h-screen shrink-0"
-        style={{ background: BRAND_GREEN }}
+        style={{ background: DARK_BG }}
       >
         <div className="flex items-center gap-3">
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(255,255,255,0.12)' }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center"
+            style={{ background: 'rgba(255,255,255,0.08)' }}
           >
             <GradCapIcon className="w-6 h-6 text-white" />
           </div>
           <span className="text-xl font-bold text-white tracking-tight">EduTrack</span>
         </div>
 
-        <div className="mt-10 lg:mt-0 flex-1 flex flex-col justify-center py-8 lg:py-0">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-4 max-w-md">
+        <div className="mt-10 flex-1 flex flex-col justify-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 max-w-md">
             Empowering Students to Grow Further
           </h2>
-          <p className="text-base leading-relaxed max-w-md" style={{ color: 'rgba(255,255,255,0.82)' }}>
-            A centralized platform for NGOs, schools, and community programs to track student progress and drive meaningful outcomes.
+
+          <p className="text-base max-w-md" style={{ color: 'rgba(255,255,255,0.75)' }}>
+            A centralized platform for NGOs, schools, and community programs to track student progress.
           </p>
 
-          <ul className="mt-10 space-y-5 list-none p-0 m-0">
+          <ul className="mt-10 space-y-5">
             {stats.map((stat) => (
               <li key={stat.label} className="flex items-start gap-4">
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                  style={{ background: 'rgba(0,0,0,0.18)' }}
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
+                  style={{ background: BRAND_PRIMARY }}
                 >
-                  <span className="text-sm font-bold" style={{ color: '#B8E6B3' }}>✓</span>
+                  <span className="text-sm font-bold" style={{ color: BRAND_ACCENT }}>✓</span>
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-white leading-tight">{stat.value}</div>
-                  <div className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>{stat.label}</div>
+                  <div className="text-lg font-bold text-white">{stat.value}</div>
+                  <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    {stat.label}
+                  </div>
                 </div>
               </li>
             ))}
           </ul>
         </div>
 
-        <p className="text-xs mt-8 lg:mt-0" style={{ color: 'rgba(255,255,255,0.38)' }}>
+        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
           © 2026 EduTrack. Built for impact.
         </p>
       </div>
 
-      {/* Right panel — form */}
-      <div className="flex-1 flex items-center justify-center bg-white px-6 py-12 sm:px-10 lg:px-16 min-h-0">
-        <div className="w-full max-w-[420px]">
-          <header className="mb-8">
-            <h1 className="text-2xl sm:text-[1.75rem] font-bold mb-2 tracking-tight" style={{ color: '#1e293b' }}>
-              Welcome back
-            </h1>
-            <p className="text-sm sm:text-[0.9375rem]" style={{ color: '#64748b' }}>
-              Sign in to access your dashboard
-            </p>
-          </header>
+      {/* Right panel */}
+      <div className="flex-1 flex items-center justify-center bg-gray-50 px-6 py-12">
+        <div className="w-full max-w-[420px] bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
 
-          <div
-            className="mb-6 p-4 rounded-lg"
-            style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}
-          >
-            <p
-              className="text-[0.6875rem] font-semibold tracking-wide mb-3"
-              style={{ color: '#64748b' }}
-            >
-              DEMO — CLICK TO LOGIN AS:
+          {/* Header */}
+          <h1 className="text-3xl font-bold mb-1 tracking-tight" style={{ color: DARK_BG }}>
+            Welcome back
+          </h1>
+          <p className="text-sm mb-8" style={{ color: '#64748b' }}>
+            Sign in to access your dashboard
+          </p>
+
+          {/* Demo selector */}
+          <div className="mb-8">
+            <p className="text-xs mb-3 text-gray-400 font-semibold tracking-wide">
+              DEMO ACCESS
             </p>
+
             <div className="flex gap-2">
               {demoAccounts.map((acc) => {
                 const selected = role === acc.role;
@@ -125,52 +127,48 @@ export default function Login({ onLogin }) {
                     key={acc.role}
                     type="button"
                     onClick={() => fillDemo(acc)}
-                    className="flex-1 py-2.5 px-2 rounded-lg text-xs font-semibold transition-colors"
+                    className="flex-1 py-2 rounded-full text-xs font-semibold transition-all duration-200"
                     style={{
-                      background: selected ? '#e8f5e9' : '#ffffff',
-                      color: selected ? BRAND_GREEN : '#64748b',
-                      border: selected ? `1px solid ${BRAND_GREEN}` : '1px solid #e2e8f0',
-                      boxShadow: selected ? 'none' : undefined,
+                      background: selected ? BRAND_PRIMARY : '#fff',
+                      color: selected ? '#fff' : '#64748b',
+                      border: selected
+                        ? `1px solid ${BRAND_PRIMARY}`
+                        : '1px solid #e2e8f0',
+                      boxShadow: selected
+                        ? `0 4px 12px ${BRAND_PRIMARY}33`
+                        : 'none',
                     }}
                   >
-                    {acc.role.charAt(0).toUpperCase() + acc.role.slice(1)}
+                    {acc.role}
                   </button>
                 );
               })}
             </div>
           </div>
 
+          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
+
             {error && (
-              <div
-                className="px-4 py-3 rounded-lg text-sm"
-                style={{ background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca' }}
-              >
+              <div className="p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg">
                 {error}
               </div>
             )}
 
-            <div className="space-y-1.5">
-              <label htmlFor="login-email" className="text-sm font-medium" style={{ color: '#334155' }}>
-                Email address
+            {/* Email */}
+            <div>
+              <label className="text-xs font-semibold text-gray-500 block mb-1">
+                Email
               </label>
               <input
-                id="login-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-                className="w-full text-sm px-3.5 py-3 rounded-lg outline-none transition-[border-color,box-shadow] focus:ring-2"
-                style={{
-                  background: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                  color: '#0f172a',
-                  borderRadius: '8px',
-                }}
+                className="w-full p-3 border rounded-lg transition-all duration-200 outline-none"
+                placeholder="Enter your email"
                 onFocus={(e) => {
-                  e.target.style.borderColor = BRAND_GREEN;
-                  e.target.style.boxShadow = `0 0 0 3px ${BRAND_GREEN}26`;
+                  e.target.style.borderColor = BRAND_PRIMARY;
+                  e.target.style.boxShadow = `0 0 0 3px ${BRAND_PRIMARY}20`;
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = '#e2e8f0';
@@ -179,27 +177,20 @@ export default function Login({ onLogin }) {
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="login-password" className="text-sm font-medium" style={{ color: '#334155' }}>
+            {/* Password */}
+            <div>
+              <label className="text-xs font-semibold text-gray-500 block mb-1">
                 Password
               </label>
               <input
-                id="login-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="current-password"
-                className="w-full text-sm px-3.5 py-3 rounded-lg outline-none transition-[border-color,box-shadow]"
-                style={{
-                  background: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                  color: '#0f172a',
-                  borderRadius: '8px',
-                }}
+                className="w-full p-3 border rounded-lg transition-all duration-200 outline-none"
+                placeholder="Enter your password"
                 onFocus={(e) => {
-                  e.target.style.borderColor = BRAND_GREEN;
-                  e.target.style.boxShadow = `0 0 0 3px ${BRAND_GREEN}26`;
+                  e.target.style.borderColor = BRAND_PRIMARY;
+                  e.target.style.boxShadow = `0 0 0 3px ${BRAND_PRIMARY}20`;
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = '#e2e8f0';
@@ -208,40 +199,34 @@ export default function Login({ onLogin }) {
               />
             </div>
 
+            {/* Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-lg text-sm font-bold text-white transition-colors disabled:opacity-85"
+              className="w-full py-3 rounded-lg text-white font-semibold tracking-wide transition-all duration-200"
               style={{
-                background: loading ? BRAND_GREEN_HOVER : BRAND_GREEN,
-                borderRadius: '8px',
+                background: loading ? BRAND_HOVER : BRAND_PRIMARY,
+                boxShadow: `0 6px 14px ${BRAND_PRIMARY}40`,
               }}
               onMouseEnter={(e) => {
-                if (!loading) e.currentTarget.style.background = BRAND_GREEN_HOVER;
+                if (!loading) e.currentTarget.style.background = BRAND_HOVER;
               }}
               onMouseLeave={(e) => {
-                if (!loading) e.currentTarget.style.background = BRAND_GREEN;
+                if (!loading) e.currentTarget.style.background = BRAND_PRIMARY;
               }}
             >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden>
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
-                  Signing in...
-                </span>
-              ) : (
-                'Sign in'
-              )}
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
+
           </form>
         </div>
       </div>
     </div>
   );
 }
+
+//Navy Theme mapping used:
+//#3A0519 → dark background (left panel)
+//#670D2F → primary brand color
+//#A53860 → hover / secondary
+//#EF88AD → soft accent highlights
