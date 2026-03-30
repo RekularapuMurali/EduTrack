@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Login from './pages/login.jsx';
+import StudentDashboard from './pages/student/StudentDashboard.jsx';
+import Sidebar from './components/layout/Sidebar.jsx';
+import Topbar from './components/layout/Topbar.jsx';
 
 
 const pageTitles = {
