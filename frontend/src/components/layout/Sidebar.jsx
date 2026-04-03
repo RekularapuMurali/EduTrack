@@ -1,4 +1,3 @@
-// src/components/layout/Sidebar.jsx
 import React, { useState } from 'react';
 
 // ── All SVG icons inline — no icon library needed ─────────
