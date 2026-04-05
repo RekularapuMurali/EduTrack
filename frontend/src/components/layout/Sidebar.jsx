@@ -91,7 +91,6 @@ const ICONS = {
 // ── Nav items shown per role ──────────────────────────────
 const NAV_BY_ROLE = {
   admin: [
-    { label: 'Component Test', key: 'test' },
     { label: 'Dashboard',   key: 'dashboard'  },
     { label: 'Students',    key: 'students'   },
     { label: 'Volunteers',  key: 'volunteers' },
@@ -126,51 +125,113 @@ function NavItem({ label, icon, isActive, onClick }) {
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`w-full flex items-center gap-2 px-2 py-2 text-sm 
-        ${isActive ? 'bg-green-100' : hovered ? 'bg-gray-200' : ''}`}
+      style={{
+        width: '100%',
+        display: 'flex', alignItems: 'center', gap: 10,
+        padding: '9px 12px',
+        borderRadius: 8, border: 'none',
+        cursor: 'pointer',
+        fontSize: 13, fontWeight: isActive ? 600 : 400,
+        marginBottom: 2, textAlign: 'left',
+        transition: 'all 0.15s',
+        background: isActive ? '#DCFCE7' : hovered ? '#FFFFFF' : 'transparent',
+        color:      isActive ? '#166534' : hovered ? '#0F172A' : '#64748B',
+      }}
     >
-      {icon}
-      <span>{label}</span>
+      <span style={{
+        color: isActive ? '#166534' : hovered ? '#374151' : '#94A3B8',
+        display: 'flex', alignItems: 'center',
+      }}>
+        {icon}
+      </span>
+      <span style={{ flex: 1 }}>{label}</span>
+      {isActive && (
+        <span style={{
+          width: 6, height: 6, borderRadius: '50%',
+          background: '#166534', flexShrink: 0,
+        }} />
+      )}
     </button>
   );
 }
 
+// ── LogoutButton ──────────────────────────────────────────
 function LogoutButton({ onClick }) {
+  const [hovered, setHovered] = useState(false);
   return (
     <button
       onClick={onClick}
-      className="p-1 cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       title="Logout"
+      style={{
+        padding: 6, border: 'none', borderRadius: 6, cursor: 'pointer',
+        transition: 'all 0.15s',
+        background: hovered ? '#FEE2E2' : 'transparent',
+        color:      hovered ? '#EF4444' : '#94A3B8',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}
     >
       {ICONS.logout}
     </button>
   );
 }
 
+// ── Main Sidebar export ───────────────────────────────────
 export default function Sidebar({ role, activePage, onNavigate, user, onLogout }) {
   const navItems = NAV_BY_ROLE[role] || NAV_BY_ROLE.student;
 
   return (
-    <div className="w-60 h-screen flex flex-col border-r bg-gray-100">
+    <div style={{
+      position: 'fixed', left: 0, top: 0,
+      width: 256, height: '100vh',
+      background: '#F1F5F9',
+      borderRight: '1px solid #E2E8F0',
+      display: 'flex', flexDirection: 'column',
+      zIndex: 10,
+    }}>
 
       {/* Logo */}
-      <div className="flex items-center gap-2 p-3 border-b">
-        <div className="w-8 h-8 bg-green-600 text-white flex items-center justify-center">
-          📘
+      <div style={{
+        padding: '18px 20px 14px',
+        borderBottom: '1px solid #E2E8F0',
+        display: 'flex', alignItems: 'center', gap: 10,
+      }}>
+        <div style={{
+          width: 36, height: 36, background: '#166534',
+          borderRadius: 10, flexShrink: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24"
+            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 0 1 .665 6.479A11.952
+              11.952 0 0 0 12 20.055a11.952 11.952 0 0 0-6.824-2.998
+              12.078 12.078 0 0 1 .665-6.479L12 14z"/>
+          </svg>
         </div>
         <div>
-          <div className="font-semibold">EduTrack</div>
-          <div className="text-xs text-gray-500">Student Management</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A', lineHeight: 1.2 }}>
+            EduTrack
+          </div>
+          <div style={{ fontSize: 11, color: '#64748B' }}>Student Management</div>
         </div>
       </div>
 
-      {/* Role */}
-      <div className="p-2 text-xs text-green-700">
-        {role}
+      {/* Role badge */}
+      <div style={{ padding: '10px 20px 6px' }}>
+        <span style={{
+          fontSize: 10, fontWeight: 600,
+          textTransform: 'uppercase', letterSpacing: '0.06em',
+          padding: '3px 10px', borderRadius: 999,
+          background: '#DCFCE7', color: '#166534',
+        }}>
+          {role}
+        </span>
       </div>
 
-      {/* Nav */}
-      <nav className="flex-1 px-2">
+      {/* Nav items */}
+      <nav style={{ flex: 1, padding: '8px 12px', overflowY: 'auto' }}>
         {navItems.map(item => (
           <NavItem
             key={item.key}
@@ -182,17 +243,34 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="flex items-center gap-2 p-3 border-t">
-        <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center text-sm">
-          {user?.name?.slice(0, 2).toUpperCase() || 'U'}
+      {/* User footer */}
+      <div style={{
+        padding: '12px 16px',
+        borderTop: '1px solid #E2E8F0',
+        display: 'flex', alignItems: 'center', gap: 10,
+      }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: '50%',
+          background: '#15803D', flexShrink: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 13, fontWeight: 600, color: 'white',
+        }}>
+          {user?.avatar || user?.name?.slice(0, 2).toUpperCase() || 'U'}
         </div>
-
-        <div className="flex-1 text-sm">
-          <div>{user?.name || 'User'}</div>
-          <div className="text-xs text-gray-500">{user?.email}</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{
+            fontSize: 13, fontWeight: 500, color: '#0F172A',
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}>
+            {user?.name || 'User'}
+          </div>
+          <div style={{
+            fontSize: 11, color: '#64748B',
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}>
+            {user?.email || ''}
+          </div>
         </div>
-
         <LogoutButton onClick={onLogout} />
       </div>
     </div>
