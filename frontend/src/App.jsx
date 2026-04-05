@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import Sidebar from './components/layout/Sidebar';
 import Topbar  from './components/layout/Topbar';
-import Login   from './pages/Login';
+import Login from './pages/Login';
+import ComponentTest from './pages/ComponentTest';
+
 
 import AdminDashboard     from './pages/admin/AdminDashboard';
 import StudentsPage       from './pages/admin/StudentsPage';
@@ -24,7 +26,10 @@ const PAGE_INFO = {
   settings:   { title: 'Settings',         sub: 'System configuration'               },
 };
 
+
+
 function renderPage(page, role, user) {
+  if (page === 'test') return <ComponentTest />;
   if (role === 'admin') {
     if (page === 'dashboard')  return <AdminDashboard />;
     if (page === 'students')   return <StudentsPage role={role} />;

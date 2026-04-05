@@ -91,6 +91,7 @@ const ICONS = {
 // ── Nav items shown per role ──────────────────────────────
 const NAV_BY_ROLE = {
   admin: [
+    { label: 'Component Test', key: 'test' },
     { label: 'Dashboard',   key: 'dashboard'  },
     { label: 'Students',    key: 'students'   },
     { label: 'Volunteers',  key: 'volunteers' },
