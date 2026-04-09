@@ -1,155 +1,153 @@
-const express = require('express');
-const router  = express.Router();
-const Student = require('../models/Student');
-const User    = require('../models/User');
+const express  = require('express');
+const router   = express.Router();
+const Activity = require('../models/Activity');
+const Student  = require('../models/Student');
 const { protect, authorize } = require('../middleware/auth');
 
-// ── GET /api/students ─────────────────────────────────────
-// Admin → all students | Volunteer → assigned only | Student → own
+// ── GET /api/activities ───────────────────────────────────
+// Supports ?student=id &type=recycling &verified=true
 router.get('/', protect, async (req, res) => {
   try {
+    const { student, type, verified } = req.query;
     let filter = {};
-    if (req.user.role === 'volunteer')  filter = { volunteer: req.user._id };
-    if (req.user.role === 'student')    filter = { user: req.user._id };
 
-    const students = await Student.find(filter)
-      .populate('user',      'name email phone avatar')
-      .populate('volunteer', 'name email')
-      .sort({ createdAt: -1 });
+    if (req.user.role === 'volunteer') {
+      const myStudents = await Student.find({ volunteer: req.user._id }).select('_id');
+      filter.student = { $in: myStudents.map(s => s._id) };
+    } else if (req.user.role === 'student') {
+      const studentDoc = await Student.findOne({ user: req.user._id });
+      if (!studentDoc) return res.json({ success: true, count: 0, data: [] });
+      filter.student = studentDoc._id;
+    }
 
-    res.json({ success: true, count: students.length, data: students });
+    if (student)              filter.student  = student;
+    if (type)                 filter.type     = type;
+    if (verified !== undefined) filter.verified = verified === 'true';
+
+    const activities = await Activity.find(filter)
+      .populate('student',    'user grade')
+      .populate('volunteer',  'name email')
+      .populate('verifiedBy', 'name')
+      .sort({ completedAt: -1 });
+
+    res.json({ success: true, count: activities.length, data: activities });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error fetching students' });
+    res.status(500).json({ success: false, message: 'Server error fetching activities' });
   }
 });
 
-// ── GET /api/students/:id ─────────────────────────────────
+// ── GET /api/activities/:id ───────────────────────────────
 router.get('/:id', protect, async (req, res) => {
   try {
-    const student = await Student.findById(req.params.id)
-      .populate('user',      'name email phone avatar')
-      .populate('volunteer', 'name email phone')
-      .populate('assessments')
-      .populate('activities')
-      .populate('sessions');
+    const activity = await Activity.findById(req.params.id)
+      .populate('student',    'user grade school')
+      .populate('volunteer',  'name email')
+      .populate('verifiedBy', 'name');
 
-    if (!student) return res.status(404).json({ success: false, message: 'Student not found' });
-
-    // Student can only see own profile
-    if (req.user.role === 'student' &&
-        student.user._id.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ success: false, message: 'Not authorized' });
-    }
-
-    res.json({ success: true, data: student });
+    if (!activity) return res.status(404).json({ success: false, message: 'Activity not found' });
+    res.json({ success: true, data: activity });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error fetching student' });
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 });
 
-// ── POST /api/students ────────────────────────────────────
-// Creates User account + Student profile together
+// ── POST /api/activities ──────────────────────────────────
 router.post('/', protect, authorize('admin', 'volunteer'), async (req, res) => {
   try {
-    const {
-      name, email, password = 'password123',
-      grade, school, dateOfBirth, address,
-      parentName, parentPhone, volunteerId, notes,
-    } = req.body;
-
-    if (await User.findOne({ email })) {
-      return res.status(400).json({ success: false, message: 'Email already registered' });
+    const { student, type, title, description, pointsEarned, completedAt } = req.body;
+    if (!student || !type || !title) {
+      return res.status(400).json({ success: false, message: 'student, type, and title are required' });
     }
 
-    const user = await User.create({ name, email, password, role: 'student' });
+    const studentDoc = await Student.findById(student);
+    if (!studentDoc) return res.status(404).json({ success: false, message: 'Student not found' });
 
-    // Auto-assign to volunteer if they created this student
-    let assignedVolunteer = volunteerId || undefined;
-    if (req.user.role === 'volunteer' && !volunteerId) {
-      assignedVolunteer = req.user._id;
+    if (req.user.role === 'volunteer' &&
+        studentDoc.volunteer?.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'Not authorized to log activity for this student' });
     }
 
-    const student = await Student.create({
-      user: user._id, volunteer: assignedVolunteer,
-      grade, school, dateOfBirth, address, parentName, parentPhone, notes,
+    const activity = await Activity.create({
+      student, type, title, description,
+      pointsEarned: pointsEarned || 10,
+      completedAt:  completedAt  || Date.now(),
+      volunteer:    req.user._id,
     });
 
-    const populated = await Student.findById(student._id)
-      .populate('user', 'name email').populate('volunteer', 'name email');
-
-    res.status(201).json({ success: true, data: populated });
+    res.status(201).json({ success: true, data: activity });
   } catch (err) {
     if (err.name === 'ValidationError') {
       return res.status(400).json({ success: false, message: Object.values(err.errors)[0].message });
     }
-    res.status(500).json({ success: false, message: 'Server error creating student' });
+    res.status(500).json({ success: false, message: 'Server error creating activity' });
   }
 });
 
-// ── PUT /api/students/:id ─────────────────────────────────
+// ── PUT /api/activities/:id/verify ────────────────────────
+// Marks verified + adds points to student greenPoints
+router.put('/:id/verify', protect, authorize('admin', 'volunteer'), async (req, res) => {
+  try {
+    const activity = await Activity.findById(req.params.id);
+    if (!activity)       return res.status(404).json({ success: false, message: 'Activity not found' });
+    if (activity.verified) return res.status(400).json({ success: false, message: 'Activity already verified' });
+
+    activity.verified   = true;
+    activity.verifiedBy = req.user._id;
+    activity.verifiedAt = new Date();
+    await activity.save();
+
+    // Add points to student
+    await Student.findByIdAndUpdate(activity.student, { $inc: { greenPoints: activity.pointsEarned } });
+
+    res.json({ success: true, message: `Activity verified. ${activity.pointsEarned} points added.`, data: activity });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error verifying activity' });
+  }
+});
+
+// ── PUT /api/activities/:id ───────────────────────────────
 router.put('/:id', protect, authorize('admin', 'volunteer'), async (req, res) => {
   try {
-    let student = await Student.findById(req.params.id);
-    if (!student) return res.status(404).json({ success: false, message: 'Student not found' });
+    const activity = await Activity.findById(req.params.id);
+    if (!activity)        return res.status(404).json({ success: false, message: 'Activity not found' });
+    if (activity.verified) return res.status(400).json({ success: false, message: 'Cannot edit a verified activity' });
 
-    // Volunteer can only update their own students
     if (req.user.role === 'volunteer' &&
-        student.volunteer?.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ success: false, message: 'Not authorized to update this student' });
+        activity.volunteer?.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'Not authorized to edit this activity' });
     }
-
-    const allowed = ['grade','school','dateOfBirth','address','parentName','parentPhone','status','notes'];
-    if (req.user.role === 'admin') allowed.push('volunteer');
 
     const updateData = {};
-    allowed.forEach(f => { if (req.body[f] !== undefined) updateData[f] = req.body[f]; });
+    ['type','title','description','pointsEarned','completedAt'].forEach(f => {
+      if (req.body[f] !== undefined) updateData[f] = req.body[f];
+    });
 
-    student = await Student.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true })
-      .populate('user', 'name email').populate('volunteer', 'name email');
-
-    res.json({ success: true, data: student });
+    const updated = await Activity.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
+    res.json({ success: true, data: updated });
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      return res.status(400).json({ success: false, message: Object.values(err.errors)[0].message });
-    }
-    res.status(500).json({ success: false, message: 'Server error updating student' });
+    res.status(500).json({ success: false, message: 'Server error updating activity' });
   }
 });
 
-// ── DELETE /api/students/:id (admin only) ─────────────────
-router.delete('/:id', protect, authorize('admin'), async (req, res) => {
+// ── DELETE /api/activities/:id ────────────────────────────
+router.delete('/:id', protect, authorize('admin', 'volunteer'), async (req, res) => {
   try {
-    const student = await Student.findById(req.params.id);
-    if (!student) return res.status(404).json({ success: false, message: 'Student not found' });
+    const activity = await Activity.findById(req.params.id);
+    if (!activity) return res.status(404).json({ success: false, message: 'Activity not found' });
 
-    await User.findByIdAndDelete(student.user);    // delete user account
-    await Student.findByIdAndDelete(req.params.id); // delete profile
-
-    res.json({ success: true, message: 'Student deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error deleting student' });
-  }
-});
-
-// ── PUT /api/students/:id/assign (admin only) ─────────────
-router.put('/:id/assign', protect, authorize('admin'), async (req, res) => {
-  try {
-    const { volunteerId } = req.body;
-    if (volunteerId) {
-      const vol = await User.findById(volunteerId);
-      if (!vol || vol.role !== 'volunteer') {
-        return res.status(400).json({ success: false, message: 'Invalid volunteer ID' });
-      }
+    if (activity.verified && req.user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Cannot delete a verified activity' });
     }
 
-    const student = await Student.findByIdAndUpdate(
-      req.params.id, { volunteer: volunteerId || null }, { new: true }
-    ).populate('user', 'name email').populate('volunteer', 'name email');
+    // Subtract points if already verified
+    if (activity.verified) {
+      await Student.findByIdAndUpdate(activity.student, { $inc: { greenPoints: -activity.pointsEarned } });
+    }
 
-    if (!student) return res.status(404).json({ success: false, message: 'Student not found' });
-    res.json({ success: true, data: student });
+    await Activity.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: 'Activity deleted successfully' });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Server error assigning volunteer' });
+    res.status(500).json({ success: false, message: 'Server error deleting activity' });
   }
 });
 
