@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { StatCard, Card, Badge, Avatar, ProgressBar } from '../../components/ui/index.jsx';
-import { mockStudents, mockSessions, progressChartData } from '../../data/mockData.js';
-
-const myStudents        = mockStudents.slice(0, 3);
-const upcomingSessions  = mockSessions.filter(s => s.status === 'scheduled');
-const completedSessions = mockSessions.filter(s => s.status === 'completed');
+import { StatCard, Card, Badge, Avatar, ProgressBar, Spinner } from '../../components/ui/index.jsx';
+import { studentAPI, sessionAPI, activityAPI } from '../../utils/api.js';
 
 const ICONS = {
   students: <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>,
@@ -15,105 +11,116 @@ const ICONS = {
 };
 
 export default function VolunteerDashboard({ user }) {
+  const [students,  setStudents]  = useState([]);
+  const [sessions,  setSessions]  = useState([]);
+  const [loading,   setLoading]   = useState(true);
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const [studsRes, sessRes] = await Promise.all([
+          studentAPI.getAll(),
+          sessionAPI.getAll(),
+        ]);
+        setStudents(studsRes.data.data || []);
+        setSessions(sessRes.data.data  || []);
+      } catch (err) {
+        console.error('Volunteer dashboard fetch error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAll();
+  }, []);
+
+  if (loading) {
+    return (
+      <div style={{ padding: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 300, gap: 12 }}>
+        <Spinner /> <span style={{ fontSize: 13, color: '#64748B' }}>Loading dashboard...</span>
+      </div>
+    );
+  }
+
+  const upcoming  = sessions.filter(s => s.status === 'scheduled');
+  const completed = sessions.filter(s => s.status === 'completed');
+
+  // Build a simple progress trend from whatever data we have
+  const trendData = sessions.length > 0
+    ? [{ month: 'This month', score: completed.length * 10 }]
+    : [{ month: 'No data', score: 0 }];
+
   return (
     <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 1200 }}>
 
       {/* Welcome */}
       <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 14, padding: 20, display: 'flex', alignItems: 'center', gap: 16 }}>
-        <Avatar name={user?.name || 'Priya Nair'} size="lg" />
+        <Avatar name={user?.name || 'Volunteer'} size="lg" />
         <div>
           <h2 style={{ fontSize: 17, fontWeight: 600, color: '#0F172A', margin: 0 }}>
-            Welcome, {user?.name?.split(' ')[0] || 'Priya'}
+            Welcome, {user?.name?.split(' ')[0] || 'Volunteer'}
           </h2>
           <p style={{ fontSize: 13, color: '#64748B', margin: '4px 0 0' }}>
-            You have <span style={{ color: '#166534', fontWeight: 600 }}>{upcomingSessions.length} sessions</span> coming up this week.
+            You have <span style={{ color: '#166534', fontWeight: 600 }}>{upcoming.length} sessions</span> scheduled.
           </p>
         </div>
       </div>
 
-      {/* Stat cards */}
+      {/* Stats */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <StatCard title="My Students"   value={myStudents.length}        subtitle="Assigned to you" color="#166534" bg="#DCFCE7" icon={ICONS.students} />
-        <StatCard title="Sessions Done" value={completedSessions.length} subtitle="This month"      trend={15} color="#1E40AF" bg="#DBEAFE" icon={ICONS.check} />
-        <StatCard title="Upcoming"      value={upcomingSessions.length}  subtitle="Scheduled"       color="#92400E" bg="#FEF3C7" icon={ICONS.calendar} />
-        <StatCard title="Avg. Score"    value="81%"                      subtitle="Across students" trend={6} color="#166534" bg="#DCFCE7" icon={ICONS.progress} />
+        <StatCard title="My Students"   value={students.length}   subtitle="Assigned to you" color="#166534" bg="#DCFCE7" icon={ICONS.students} />
+        <StatCard title="Sessions Done" value={completed.length}  subtitle="This month"      color="#1E40AF" bg="#DBEAFE" icon={ICONS.check} />
+        <StatCard title="Upcoming"      value={upcoming.length}   subtitle="Scheduled"       color="#92400E" bg="#FEF3C7" icon={ICONS.calendar} />
+        <StatCard title="Total Sessions"value={sessions.length}   subtitle="All time"        color="#166534" bg="#DCFCE7" icon={ICONS.progress} />
       </div>
 
-      {/* Charts + sessions */}
+      {/* Chart + Sessions */}
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16 }}>
-        <Card title="Student Progress Trend" subtitle="Average score over time">
-          <ResponsiveContainer width="100%" height={220}>
-            <LineChart data={progressChartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
-              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-              <YAxis domain={[50, 100]} tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }} />
-              <Line type="monotone" dataKey="score" name="Avg Score" stroke="#166534" strokeWidth={2.5}
-                dot={{ r: 4, fill: '#166534', strokeWidth: 0 }} activeDot={{ r: 6 }} />
-            </LineChart>
-          </ResponsiveContainer>
+        <Card title="Upcoming Sessions" subtitle={`${upcoming.length} scheduled`}>
+          {upcoming.length === 0 ? (
+            <p style={{ fontSize: 13, color: '#94A3B8', textAlign: 'center', padding: '30px 0' }}>No upcoming sessions. Schedule one from the Sessions page.</p>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {upcoming.slice(0, 4).map(s => {
+                const studentName = s.student?.user?.name || 'Unknown';
+                const date = s.scheduledAt ? new Date(s.scheduledAt).toLocaleDateString() : '—';
+                const time = s.scheduledAt ? new Date(s.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
+                return (
+                  <div key={s._id} style={{ background: '#F8FAFC', borderRadius: 10, padding: 12, border: '1px solid #F1F5F9' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                      <Avatar name={studentName} size="sm" />
+                      <span style={{ fontSize: 13, fontWeight: 500, color: '#0F172A' }}>{studentName}</span>
+                    </div>
+                    <p style={{ fontSize: 11, color: '#64748B', margin: '0 0 6px' }}>📅 {date} · ⏰ {time}</p>
+                    {s.topics?.length > 0 && (
+                      <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                        {s.topics.map(t => <span key={t} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 999, background: '#DCFCE7', color: '#166534' }}>{t}</span>)}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </Card>
 
-        <Card title="Upcoming Sessions" subtitle="Next 7 days">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {upcomingSessions.map(s => (
-              <div key={s._id} style={{ background: '#F8FAFC', borderRadius: 10, padding: 12, border: '1px solid #F1F5F9' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                  <Avatar name={s.student} size="sm" />
-                  <span style={{ fontSize: 13, fontWeight: 500, color: '#0F172A' }}>{s.student}</span>
+        <Card title="My Students" subtitle={`${students.length} assigned`}>
+          {students.length === 0 ? (
+            <p style={{ fontSize: 13, color: '#94A3B8', textAlign: 'center', padding: '30px 0' }}>No students assigned yet.</p>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {students.slice(0, 5).map(s => (
+                <div key={s._id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <Avatar name={s.user?.name} size="sm" />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{ fontSize: 13, fontWeight: 500, color: '#0F172A', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.user?.name || 'Unknown'}</p>
+                    <p style={{ fontSize: 11, color: '#64748B', margin: 0 }}>{s.grade} · {s.school}</p>
+                  </div>
+                  <Badge variant={s.status}>{s.status}</Badge>
                 </div>
-                <p style={{ fontSize: 11, color: '#64748B', margin: '0 0 6px' }}>📅 {s.date} · ⏰ {s.time}</p>
-                <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                  {s.topics.map(t => (
-                    <span key={t} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 999, background: '#DCFCE7', color: '#166534' }}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </Card>
-      </div>
-
-      {/* My students */}
-      <Card
-        title="My Students" subtitle={`${myStudents.length} students assigned`}
-        action={<button style={{ fontSize: 12, fontWeight: 500, color: '#166534', background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>}
-      >
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-          {myStudents.map(s => <StudentCard key={s._id} student={s} />)}
-        </div>
-      </Card>
-    </div>
-  );
-}
-
-function StudentCard({ student: s }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        border: `1px solid ${hovered ? '#86EFAC' : '#F1F5F9'}`,
-        borderRadius: 12, padding: 16,
-        background: '#F8FAFC', transition: 'border-color 0.15s',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-        <Avatar name={s.name} />
-        <div>
-          <p style={{ fontSize: 13, fontWeight: 600, color: '#0F172A', margin: 0 }}>{s.name}</p>
-          <p style={{ fontSize: 11, color: '#64748B', margin: '2px 0 0' }}>{s.grade} · {s.school}</p>
-        </div>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-        <span style={{ fontSize: 12, color: '#64748B' }}>Progress</span>
-        <span style={{ fontSize: 12, fontWeight: 600, color: '#166534' }}>{Math.round(s.points / 6)}%</span>
-      </div>
-      <ProgressBar value={s.points} max={600} height={6} />
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
-        <span style={{ fontSize: 11, color: '#94A3B8' }}>🌿 {s.points} pts</span>
-        <Badge variant={s.status}>{s.status}</Badge>
       </div>
     </div>
   );

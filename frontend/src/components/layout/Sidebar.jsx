@@ -134,12 +134,12 @@ function NavItem({ label, icon, isActive, onClick }) {
         fontSize: 13, fontWeight: isActive ? 600 : 400,
         marginBottom: 2, textAlign: 'left',
         transition: 'all 0.15s',
-        background: isActive ? '#DCFCE7' : hovered ? '#FFFFFF' : 'transparent',
-        color:      isActive ? '#166534' : hovered ? '#0F172A' : '#64748B',
+        background: isActive ? '#670D2F' : hovered ? '#A53860' : 'transparent',
+        color:      isActive ? '#EF88AD' : hovered ? '#FFFFFF' : '#FFFFFF',
       }}
     >
       <span style={{
-        color: isActive ? '#166534' : hovered ? '#374151' : '#94A3B8',
+        color: isActive ? '#EF88AD' : hovered ? '#FFFFFF' : '#A53860',
         display: 'flex', alignItems: 'center',
       }}>
         {icon}
@@ -148,7 +148,7 @@ function NavItem({ label, icon, isActive, onClick }) {
       {isActive && (
         <span style={{
           width: 6, height: 6, borderRadius: '50%',
-          background: '#166534', flexShrink: 0,
+          background: '#EF88AD', flexShrink: 0,
         }} />
       )}
     </button>
@@ -167,8 +167,8 @@ function LogoutButton({ onClick }) {
       style={{
         padding: 6, border: 'none', borderRadius: 6, cursor: 'pointer',
         transition: 'all 0.15s',
-        background: hovered ? '#FEE2E2' : 'transparent',
-        color:      hovered ? '#EF4444' : '#94A3B8',
+        background: hovered ? '#A53860' : 'transparent',
+        color:      hovered ? '#EF88AD' : '#FFFFFF',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}
     >
@@ -185,8 +185,8 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
     <div style={{
       position: 'fixed', left: 0, top: 0,
       width: 256, height: '100vh',
-      background: '#F1F5F9',
-      borderRight: '1px solid #E2E8F0',
+      background: '#3A0519',
+      borderRight: '1px solid #670D2F',
       display: 'flex', flexDirection: 'column',
       zIndex: 10,
     }}>
@@ -194,7 +194,7 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
       {/* Logo */}
       <div style={{
         padding: '18px 20px 14px',
-        borderBottom: '1px solid #E2E8F0',
+        borderBottom: '1px solid #670D2F',
         display: 'flex', alignItems: 'center', gap: 10,
       }}>
         <div style={{

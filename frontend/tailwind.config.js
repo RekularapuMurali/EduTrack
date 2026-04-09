@@ -5,10 +5,10 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#166534',
-          medium: '#15803D',
-          light: '#4ADE80',
-          bg: '#DCFCE7',
+          DEFAULT: '#670D2F',
+          medium: '#A53860',
+          light: '#EF88AD',
+          bg: '#3A0519',
         }
       }
     },
