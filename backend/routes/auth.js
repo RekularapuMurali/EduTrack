@@ -25,12 +25,10 @@ router.post('/register', [
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     user = new User({
       email,
-      password: hashedPassword,
+      // User model pre-save hook hashes password once.
+      password,
       role,
       name,
     });
@@ -42,6 +40,7 @@ router.post('/register', [
 
     res.json({ token, user: user.toPublicJSON() });
   } catch (err) {
+    console.error('Register error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -59,12 +58,23 @@ router.post('/login', [
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    // Password is select:false in schema, explicitly include it for login verification.
+    const user = await User.findOne({ email }).select('+password');
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    let isMatch = await user.comparePassword(password);
+
+    // Backward-compatibility: if legacy plain-text password exists in DB,
+    // allow one successful login and immediately migrate it to hashed.
+    const isBcryptHash = typeof user.password === 'string' && /^\$2[aby]\$\d{2}\$/.test(user.password);
+    if (!isMatch && !isBcryptHash && user.password === password) {
+      user.password = password;
+      await user.save();
+      isMatch = true;
+    }
+
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
@@ -77,6 +87,7 @@ router.post('/login', [
 
     res.json({ token, user: user.toPublicJSON() });
   } catch (err) {
+    console.error('Login error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 });
