@@ -108,9 +108,9 @@ function VolunteerCard({ volunteer: v, onToggleStatus }) {
       style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 14, padding: 20, boxShadow: hovered ? '0 4px 12px rgba(0,0,0,0.08)' : '0 1px 3px rgba(0,0,0,0.04)', transition: 'box-shadow 0.2s' }}>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 14 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Avatar name={v.name} size="lg" color="#15803D" />
+          <Avatar name={v.name} size="lg" color="#285A48" />
           <div>
-            <p style={{ fontSize: 14, fontWeight: 700, color: '#0F172A', margin: 0 }}>{v.name}</p>
+            <p style={{ fontSize: 14, fontWeight: 700, color: '#091413', margin: 0 }}>{v.name}</p>
             <p style={{ fontSize: 12, color: '#64748B', margin: '2px 0 0' }}>{v.email}</p>
           </div>
         </div>
@@ -118,13 +118,13 @@ function VolunteerCard({ volunteer: v, onToggleStatus }) {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 14 }}>
         {[[v.studentsCount || 0, 'Students']].map(([val, label]) => (
-          <div key={label} style={{ background: '#F8FAFC', borderRadius: 10, padding: 10, textAlign: 'center' }}>
-            <p style={{ fontSize: 20, fontWeight: 700, color: '#166534', margin: 0 }}>{val}</p>
+          <div key={label} style={{ background: '#F0F8F5', borderRadius: 10, padding: 10, textAlign: 'center' }}>
+            <p style={{ fontSize: 20, fontWeight: 700, color: '#285A48', margin: 0 }}>{val}</p>
             <p style={{ fontSize: 11, color: '#94A3B8', margin: '2px 0 0' }}>{label}</p>
           </div>
         ))}
-        <div style={{ background: '#F8FAFC', borderRadius: 10, padding: 10, textAlign: 'center' }}>
-          <p style={{ fontSize: 20, fontWeight: 700, color: '#166534', margin: 0 }}>{v.phone ? '✓' : '—'}</p>
+        <div style={{ background: '#F0F8F5', borderRadius: 10, padding: 10, textAlign: 'center' }}>
+          <p style={{ fontSize: 20, fontWeight: 700, color: '#285A48', margin: 0 }}>{v.phone ? '✓' : '—'}</p>
           <p style={{ fontSize: 11, color: '#94A3B8', margin: '2px 0 0' }}>Phone</p>
         </div>
       </div>
@@ -136,7 +136,7 @@ function VolunteerCard({ volunteer: v, onToggleStatus }) {
         <ProgressBar value={v.studentsCount || 0} max={10} height={6} />
       </div>
       <button onClick={onToggleStatus}
-        style={{ width: '100%', padding: '7px 0', borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s', background: v.isActive ? '#FEE2E2' : '#DCFCE7', color: v.isActive ? '#991B1B' : '#166534' }}>
+        style={{ width: '100%', padding: '7px 0', borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s', background: v.isActive ? '#FEE2E2' : '#E8F4F8', color: v.isActive ? '#991B1B' : '#285A48' }}>
         {v.isActive ? 'Deactivate' : 'Activate'}
       </button>
     </div>

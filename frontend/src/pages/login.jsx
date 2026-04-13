@@ -28,7 +28,7 @@ export default function Login() {
     <div style={{ display: 'flex', height: '100vh' }}>
 
       {/* Left green panel */}
-      <div style={{ width: '42%', background: 'linear-gradient(160deg, #3A0519 0%, #670D2F 100%)', padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <div style={{ width: '42%', background: 'linear-gradient(160deg, #091413 0%, #285A48 100%)', padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 40, height: 40, background: 'rgba(255,255,255,0.15)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg width="22" height="22" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -63,7 +63,7 @@ export default function Login() {
       {/* Right form panel */}
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40, background: '#F8FAFC' }}>
         <div style={{ width: '100%', maxWidth: 400 }}>
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: '#0F172A', marginBottom: 6 }}>Welcome back</h1>
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: '#091413', marginBottom: 6 }}>Welcome back</h1>
           <p style={{ fontSize: 13, color: '#64748B', marginBottom: 32 }}>Sign in to your EduTrack dashboard</p>
 
           {error && (
@@ -78,9 +78,9 @@ export default function Login() {
                 Email <span style={{ color: '#EF4444' }}>*</span>
               </label>
               <input type="email" value={email} required onChange={e => setEmail(e.target.value)}
-                onFocus={e => e.target.style.borderColor = '#670D2F'}
+                onFocus={e => e.target.style.borderColor = '#285A48'}
                 onBlur={e  => e.target.style.borderColor = '#E2E8F0'}
-                style={{ width: '100%', fontSize: 13, padding: '9px 12px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#0F172A', outline: 'none', boxSizing: 'border-box' }}
+                style={{ width: '100%', fontSize: 13, padding: '9px 12px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#091413', outline: 'none', boxSizing: 'border-box' }}
               />
             </div>
 
@@ -89,16 +89,16 @@ export default function Login() {
                 Password <span style={{ color: '#EF4444' }}>*</span>
               </label>
               <input type="password" value={password} required onChange={e => setPassword(e.target.value)}
-                onFocus={e => e.target.style.borderColor = '#670D2F'}
+                onFocus={e => e.target.style.borderColor = '#285A48'}
                 onBlur={e  => e.target.style.borderColor = '#E2E8F0'}
-                style={{ width: '100%', fontSize: 13, padding: '9px 12px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#0F172A', outline: 'none', boxSizing: 'border-box' }}
+                style={{ width: '100%', fontSize: 13, padding: '9px 12px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#091413', outline: 'none', boxSizing: 'border-box' }}
               />
             </div>
 
             <button type="submit" disabled={loading}
-              style={{ width: '100%', padding: '11px 0', background: '#670D2F', color: 'white', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
-              onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#A53860'; }}
-              onMouseLeave={e => { if (!loading) e.currentTarget.style.background = '#670D2F'; }}
+              style={{ width: '100%', padding: '11px 0', background: '#285A48', color: 'white', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+              onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#408A71'; }}
+              onMouseLeave={e => { if (!loading) e.currentTarget.style.background = '#285A48'; }}
             >
               {loading ? (
                 <>

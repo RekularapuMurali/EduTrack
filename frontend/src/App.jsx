@@ -76,14 +76,14 @@ export default function App() {
 function LoadingScreen() {
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#F8FAFC', gap: 16 }}>
-      <div style={{ width: 48, height: 48, background: '#166534', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 48, height: 48, background: '#285A48', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <svg width="26" height="26" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 14l9-5-9-5-9 5 9 5z"/>
           <path d="M12 14l6.16-3.422a12.083 12.083 0 0 1 .665 6.479A11.952 11.952 0 0 0 12 20.055a11.952 11.952 0 0 0-6.824-2.998 12.078 12.078 0 0 1 .665-6.479L12 14z"/>
         </svg>
       </div>
-      <p style={{ fontSize: 16, fontWeight: 600, color: '#0F172A' }}>EduTrack</p>
-      <div style={{ width: 24, height: 24, border: '2.5px solid #E2E8F0', borderTop: '2.5px solid #166534', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
+      <p style={{ fontSize: 16, fontWeight: 600, color: '#091413' }}>EduTrack</p>
+      <div style={{ width: 24, height: 24, border: '2.5px solid #E2E8F0', borderTop: '2.5px solid #285A48', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );

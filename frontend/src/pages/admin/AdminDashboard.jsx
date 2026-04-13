@@ -14,7 +14,7 @@ const ICONS = {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div style={{ background: '#0F172A', borderRadius: 8, padding: '8px 12px' }}>
+    <div style={{ background: '#091413', borderRadius: 8, padding: '8px 12px' }}>
       <p style={{ fontSize: 11, color: '#94A3B8', marginBottom: 4 }}>{label}</p>
       {payload.map(p => <p key={p.dataKey} style={{ fontSize: 12, color: '#fff', margin: '2px 0' }}>{p.name}: {p.value}</p>)}
     </div>
@@ -61,7 +61,7 @@ export default function AdminDashboard({ user }) {
   if (loading) {
     return (
       <div style={{ padding: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 300 }}>
-        <div style={{ width: 28, height: 28, border: '3px solid #E2E8F0', borderTop: '3px solid #166534', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
+        <div style={{ width: 28, height: 28, border: '3px solid #E2E8F0', borderTop: '3px solid #285A48', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
@@ -71,7 +71,7 @@ export default function AdminDashboard({ user }) {
     <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 1200 }}>
 
       {/* Welcome banner */}
-      <div style={{ background: 'linear-gradient(135deg, #166534 0%, #15803D 100%)', borderRadius: 14, padding: '24px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 4px 20px rgba(22,101,52,0.25)' }}>
+      <div style={{ background: 'linear-gradient(135deg, #285A48 0%, #408A71 100%)', borderRadius: 14, padding: '24px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 4px 20px rgba(40,90,72,0.25)' }}>
         <div>
           <h2 style={{ fontSize: 20, fontWeight: 700, color: 'white', marginBottom: 4 }}>
             Good morning, {user?.name?.split(' ')[0] || 'Admin'} 👋
@@ -93,10 +93,10 @@ export default function AdminDashboard({ user }) {
 
       {/* Stat cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <StatCard title="Total Students"   value={stats.students}   subtitle="In the system"      color="#166534" bg="#DCFCE7" icon={ICONS.students}   />
-        <StatCard title="Volunteers"        value={stats.volunteers} subtitle="Active members"     color="#1E40AF" bg="#DBEAFE" icon={ICONS.volunteers} />
+        <StatCard title="Total Students"   value={stats.students}   subtitle="In the system"      color="#285A48" bg="#E8F4F8" icon={ICONS.students}   />
+        <StatCard title="Volunteers"        value={stats.volunteers} subtitle="Active members"     color="#1E40AF" bg="#E8F4F8" icon={ICONS.volunteers} />
         <StatCard title="Active Sessions"   value={stats.sessions}   subtitle="Scheduled"          color="#92400E" bg="#FEF3C7" icon={ICONS.sessions}   />
-        <StatCard title="Green Activities"  value={stats.activities} subtitle="Total logged"       color="#166534" bg="#DCFCE7" icon={ICONS.activities} />
+        <StatCard title="Green Activities"  value={stats.activities} subtitle="Total logged"       color="#285A48" bg="#E8F4F8" icon={ICONS.activities} />
       </div>
 
       {/* Charts */}
@@ -108,8 +108,8 @@ export default function AdminDashboard({ user }) {
               <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 12, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F8FAFC' }} />
-              <Bar dataKey="students" name="Students" fill="#DCFCE7" radius={[4,4,0,0]} stroke="#166534" strokeWidth={1} />
-              <Bar dataKey="sessions" name="Sessions"  fill="#166534" radius={[4,4,0,0]} />
+              <Bar dataKey="students" name="Students" fill="#E8F4F8" radius={[4,4,0,0]} stroke="#285A48" strokeWidth={1} />
+              <Bar dataKey="sessions" name="Sessions"  fill="#285A48" radius={[4,4,0,0]} />
             </BarChart>
           </ResponsiveContainer>
         </Card>
@@ -139,13 +139,13 @@ export default function AdminDashboard({ user }) {
 
       {/* Bottom row */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-        <Card title="Recent Students" subtitle="Latest enrollments" action={<button style={{ fontSize: 12, fontWeight: 500, color: '#166534', background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>}>
+        <Card title="Recent Students" subtitle="Latest enrollments" action={<button style={{ fontSize: 12, fontWeight: 500, color: '#285A48', background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {students.slice(0, 4).map(s => (
               <div key={s._id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <Avatar name={s.user?.name || 'Unknown'} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: 13, fontWeight: 500, color: '#0F172A', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.user?.name}</p>
+                  <p style={{ fontSize: 13, fontWeight: 500, color: '#091413', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.user?.name}</p>
                   <p style={{ fontSize: 11, color: '#64748B', margin: 0 }}>{s.grade} · {s.school}</p>
                 </div>
                 <Badge variant={s.status}>{s.status}</Badge>
@@ -155,13 +155,13 @@ export default function AdminDashboard({ user }) {
           </div>
         </Card>
 
-        <Card title="Volunteer Overview" subtitle="Active team" action={<button style={{ fontSize: 12, fontWeight: 500, color: '#166534', background: 'none', border: 'none', cursor: 'pointer' }}>Manage →</button>}>
+        <Card title="Volunteer Overview" subtitle="Active team" action={<button style={{ fontSize: 12, fontWeight: 500, color: '#285A48', background: 'none', border: 'none', cursor: 'pointer' }}>Manage →</button>}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {volunteers.slice(0, 4).map(v => (
               <div key={v._id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <Avatar name={v.name} color="#15803D" />
+                <Avatar name={v.name} color="#285A48" />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: 13, fontWeight: 500, color: '#0F172A', margin: 0 }}>{v.name}</p>
+                  <p style={{ fontSize: 13, fontWeight: 500, color: '#091413', margin: 0 }}>{v.name}</p>
                   <p style={{ fontSize: 11, color: '#64748B', margin: 0 }}>{v.studentsCount || 0} students assigned</p>
                 </div>
                 <div style={{ width: 80 }}>

@@ -53,7 +53,7 @@ export default function ComponentTest() {
         <SectionHeader>Stat Cards</SectionHeader>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           <StatCard title="Total Students" value={124} subtitle="this month" trend={8}
-            color="#166534" bg="#DCFCE7"
+            color="#285A48" bg="#E8F4F8"
             icon={<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>}
           />
           <StatCard title="Volunteers" value={18} trend={-2} color="#1E40AF" bg="#DBEAFE"

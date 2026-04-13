@@ -122,8 +122,8 @@ export default function StudentsPage({ role }) {
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           <div style={{ position: 'relative' }}>
             <input type="text" placeholder="Search students..." value={search} onChange={e => setSearch(e.target.value)}
-              style={{ fontSize: 13, padding: '7px 14px 7px 34px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#0F172A', outline: 'none', width: 220 }}
-              onFocus={e => e.target.style.borderColor = '#166534'}
+              style={{ fontSize: 13, padding: '7px 14px 7px 34px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#091413', outline: 'none', width: 220 }}
+              onFocus={e => e.target.style.borderColor = '#285A48'}
               onBlur={e  => e.target.style.borderColor = '#E2E8F0'}
             />
             <svg width="15" height="15" fill="none" stroke="#94A3B8" viewBox="0 0 24 24" strokeWidth="2"
@@ -242,14 +242,14 @@ function StudentRow({ student: s, role, onView, onDelete, isLast }) {
       <td style={{ padding: '12px 16px', fontSize: 13, color: '#64748B' }}>{s.volunteer?.name || 'Not assigned'}</td>
       <td style={{ padding: '12px 16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-          <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#4ADE80', display: 'inline-block' }} />
-          <span style={{ fontSize: 13, fontWeight: 600, color: '#0F172A' }}>{s.greenPoints || 0}</span>
+          <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#B0E4CC', display: 'inline-block' }} />
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#091413' }}>{s.greenPoints || 0}</span>
         </div>
       </td>
       <td style={{ padding: '12px 16px' }}><Badge variant={s.status}>{s.status}</Badge></td>
       <td style={{ padding: '12px 16px' }}>
         <div style={{ display: 'flex', gap: 4 }}>
-          <IconBtn title="View" onClick={onView} hoverColor="#166534" hoverBg="#DCFCE7">
+          <IconBtn title="View" onClick={onView} hoverColor="#285A48" hoverBg="#E8F4F8">
             <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </IconBtn>
           {role === 'admin' && (

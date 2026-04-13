@@ -181,11 +181,11 @@ function SessionCard({ session: s, role, onMarkDone, onCancel }) {
         </div>
       )}
       {s.status === 'completed' && (
-        <p style={{ fontSize: 11, color: '#166534', margin: '0 0 8px' }}>✓ Student attended</p>
+        <p style={{ fontSize: 11, color: '#285A48', margin: '0 0 8px' }}>✓ Student attended</p>
       )}
       {s.status === 'scheduled' && role !== 'student' && (
         <div style={{ display: 'flex', gap: 8, paddingTop: 10, borderTop: '1px solid #F1F5F9' }}>
-          <ActionBtn onClick={onMarkDone} bg="#DCFCE7" hoverBg="#BBF7D0" color="#166534">Mark Done</ActionBtn>
+          <ActionBtn onClick={onMarkDone} bg="#E8F4F8" hoverBg="#B0E4CC" color="#285A48">Mark Done</ActionBtn>
           <ActionBtn onClick={onCancel}   bg="#FEE2E2" hoverBg="#FECACA" color="#991B1B">Cancel</ActionBtn>
         </div>
       )}

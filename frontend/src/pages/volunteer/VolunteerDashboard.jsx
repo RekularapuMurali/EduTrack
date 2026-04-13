@@ -60,17 +60,17 @@ export default function VolunteerDashboard({ user }) {
             Welcome, {user?.name?.split(' ')[0] || 'Volunteer'}
           </h2>
           <p style={{ fontSize: 13, color: '#64748B', margin: '4px 0 0' }}>
-            You have <span style={{ color: '#166534', fontWeight: 600 }}>{upcoming.length} sessions</span> scheduled.
+            You have <span style={{ color: '#285A48', fontWeight: 600 }}>{upcoming.length} sessions</span> scheduled.
           </p>
         </div>
       </div>
 
       {/* Stats */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-        <StatCard title="My Students"   value={students.length}   subtitle="Assigned to you" color="#166534" bg="#DCFCE7" icon={ICONS.students} />
+        <StatCard title="My Students"   value={students.length}   subtitle="Assigned to you" color="#285A48" bg="#E8F4F8" icon={ICONS.students} />
         <StatCard title="Sessions Done" value={completed.length}  subtitle="This month"      color="#1E40AF" bg="#DBEAFE" icon={ICONS.check} />
         <StatCard title="Upcoming"      value={upcoming.length}   subtitle="Scheduled"       color="#92400E" bg="#FEF3C7" icon={ICONS.calendar} />
-        <StatCard title="Total Sessions"value={sessions.length}   subtitle="All time"        color="#166534" bg="#DCFCE7" icon={ICONS.progress} />
+        <StatCard title="Total Sessions"value={sessions.length}   subtitle="All time"        color="#285A48" bg="#E8F4F8" icon={ICONS.progress} />
       </div>
 
       {/* Chart + Sessions */}
@@ -93,7 +93,7 @@ export default function VolunteerDashboard({ user }) {
                     <p style={{ fontSize: 11, color: '#64748B', margin: '0 0 6px' }}>📅 {date} · ⏰ {time}</p>
                     {s.topics?.length > 0 && (
                       <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                        {s.topics.map(t => <span key={t} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 999, background: '#DCFCE7', color: '#166534' }}>{t}</span>)}
+                        {s.topics.map(t => <span key={t} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 999, background: '#E8F4F8', color: '#285A48' }}>{t}</span>)}
                       </div>
                     )}
                   </div>

@@ -3,7 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Card, Avatar, Badge, ProgressBar, Button, Modal, Input, Select, Textarea, Spinner, EmptyState } from '../../components/ui/index.jsx';
 import { studentAPI, assessmentAPI } from '../../utils/api.js';
 
-const SUBJECT_COLORS = { Math: '#166534', Science: '#15803D', English: '#4ADE80', Hindi: '#86EFAC' };
+const SUBJECT_COLORS = { Math: '#285A48', Science: '#408A71', English: '#408A71', Hindi: '#B0E4CC' };
 
 const SUBJECT_OPTIONS = [
   { value: 'Math',    label: 'Math'    },
@@ -102,8 +102,8 @@ export default function ProgressPage({ role }) {
               const isSelected = s._id === selectedId;
               return (
                 <button key={s._id} onClick={() => setSelectedId(s._id)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 10, fontSize: 13, cursor: 'pointer', transition: 'all 0.15s', background: isSelected ? '#DCFCE7' : '#F8FAFC', border: isSelected ? '1px solid #86EFAC' : '1px solid #E2E8F0', color: isSelected ? '#166534' : '#64748B', fontWeight: isSelected ? 600 : 400 }}>
-                  <Avatar name={s.user?.name || 'Unknown'} size="sm" color={isSelected ? '#166534' : '#15803D'} />
+                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 10, fontSize: 13, cursor: 'pointer', transition: 'all 0.15s', background: isSelected ? '#E8F4F8' : '#F8FAFC', border: isSelected ? '1px solid #B0E4CC' : '1px solid #E2E8F0', color: isSelected ? '#285A48' : '#64748B', fontWeight: isSelected ? 600 : 400 }}>
+                  <Avatar name={s.user?.name || 'Unknown'} size="sm" color={isSelected ? '#285A48' : '#408A71'} />
                   {s.user?.name || 'Unknown'}
                 </button>
               );
@@ -133,7 +133,7 @@ export default function ProgressPage({ role }) {
               </div>
               {latest ? (
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 36, fontWeight: 800, color: '#166534', lineHeight: 1 }}>{latest.overallScore}%</div>
+                  <div style={{ fontSize: 36, fontWeight: 800, color: '#285A48', lineHeight: 1 }}>{latest.overallScore}%</div>
                   <div style={{ fontSize: 12, color: '#64748B' }}>Latest Overall</div>
                 </div>
               ) : (
@@ -146,7 +146,7 @@ export default function ProgressPage({ role }) {
                   <div key={s.name} style={{ background: '#F8FAFC', borderRadius: 10, padding: 12, textAlign: 'center' }}>
                     <p style={{ fontSize: 11, color: '#64748B', margin: '0 0 4px' }}>{s.name}</p>
                     <p style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', margin: '0 0 6px' }}>{s.score}%</p>
-                    <ProgressBar value={s.score} height={4} color={SUBJECT_COLORS[s.name] || '#166534'} />
+                    <ProgressBar value={s.score} height={4} color={SUBJECT_COLORS[s.name] || '#285A48'} />
                   </div>
                 ))}
               </div>
@@ -187,7 +187,7 @@ export default function ProgressPage({ role }) {
                     <RadarChart data={radarData}>
                       <PolarGrid stroke="#F1F5F9" />
                       <PolarAngleAxis dataKey="subject" tick={{ fontSize: 11, fill: '#64748B' }} />
-                      <Radar dataKey="score" stroke="#166534" fill="#166534" fillOpacity={0.15} strokeWidth={2} />
+                      <Radar dataKey="score" stroke="#285A48" fill="#285A48" fillOpacity={0.15} strokeWidth={2} />
                     </RadarChart>
                   </ResponsiveContainer>
                 </Card>
@@ -202,7 +202,7 @@ export default function ProgressPage({ role }) {
                       <XAxis type="number" domain={[0,100]} tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
                       <YAxis type="category" dataKey="subject" tick={{ fontSize: 12, fill: '#64748B' }} axisLine={false} tickLine={false} width={60} />
                       <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #E2E8F0', fontSize: 12 }} />
-                      <Bar dataKey="score" fill="#166534" radius={[0,4,4,0]} />
+                      <Bar dataKey="score" fill="#285A48" radius={[0,4,4,0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </Card>
@@ -232,7 +232,7 @@ export default function ProgressPage({ role }) {
                           <tr key={a._id} style={{ borderBottom: i < assessments.length - 1 ? '1px solid #F1F5F9' : 'none' }}>
                             <td style={{ padding: '12px 16px', fontSize: 13, fontWeight: 500, color: '#0F172A' }}>{a.period}</td>
                             {(a.subjects || []).map(s => <td key={s.name} style={{ padding: '12px 16px', fontSize: 13, color: '#64748B' }}>{s.score}%</td>)}
-                            <td style={{ padding: '12px 16px' }}><span style={{ fontSize: 14, fontWeight: 700, color: '#166534' }}>{a.overallScore}%</span></td>
+                            <td style={{ padding: '12px 16px' }}><span style={{ fontSize: 14, fontWeight: 700, color: '#285A48' }}>{a.overallScore}%</span></td>
                             <td style={{ padding: '12px 16px' }}>
                               {change !== null ? (
                                 <span style={{ fontSize: 12, fontWeight: 600, color: change >= 0 ? '#22C55E' : '#EF4444' }}>{change >= 0 ? '↑' : '↓'} {Math.abs(change)}%</span>

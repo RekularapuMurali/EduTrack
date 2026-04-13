@@ -134,12 +134,12 @@ function NavItem({ label, icon, isActive, onClick }) {
         fontSize: 13, fontWeight: isActive ? 600 : 400,
         marginBottom: 2, textAlign: 'left',
         transition: 'all 0.15s',
-        background: isActive ? '#670D2F' : hovered ? '#A53860' : 'transparent',
-        color:      isActive ? '#EF88AD' : hovered ? '#FFFFFF' : '#FFFFFF',
+        background: isActive ? '#285A48' : hovered ? '#408A71' : 'transparent',
+        color:      isActive ? '#B0E4CC' : hovered ? '#FFFFFF' : '#FFFFFF',
       }}
     >
       <span style={{
-        color: isActive ? '#EF88AD' : hovered ? '#FFFFFF' : '#A53860',
+        color: isActive ? '#B0E4CC' : hovered ? '#FFFFFF' : '#408A71',
         display: 'flex', alignItems: 'center',
       }}>
         {icon}
@@ -148,7 +148,7 @@ function NavItem({ label, icon, isActive, onClick }) {
       {isActive && (
         <span style={{
           width: 6, height: 6, borderRadius: '50%',
-          background: '#EF88AD', flexShrink: 0,
+          background: '#B0E4CC', flexShrink: 0,
         }} />
       )}
     </button>
@@ -167,8 +167,8 @@ function LogoutButton({ onClick }) {
       style={{
         padding: 6, border: 'none', borderRadius: 6, cursor: 'pointer',
         transition: 'all 0.15s',
-        background: hovered ? '#A53860' : 'transparent',
-        color:      hovered ? '#EF88AD' : '#FFFFFF',
+        background: hovered ? '#408A71' : 'transparent',
+        color:      hovered ? '#B0E4CC' : '#FFFFFF',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}
     >
@@ -185,8 +185,8 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
     <div style={{
       position: 'fixed', left: 0, top: 0,
       width: 256, height: '100vh',
-      background: '#3A0519',
-      borderRight: '1px solid #670D2F',
+      background: '#091413',
+      borderRight: '1px solid #285A48',
       display: 'flex', flexDirection: 'column',
       zIndex: 10,
     }}>
@@ -194,11 +194,11 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
       {/* Logo */}
       <div style={{
         padding: '18px 20px 14px',
-        borderBottom: '1px solid #670D2F',
+        borderBottom: '1px solid #285A48',
         display: 'flex', alignItems: 'center', gap: 10,
       }}>
         <div style={{
-          width: 36, height: 36, background: '#166534',
+          width: 36, height: 36, background: '#285A48',
           borderRadius: 10, flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
@@ -211,10 +211,10 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
           </svg>
         </div>
         <div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A', lineHeight: 1.2 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: '#B0E4CC', lineHeight: 1.2 }}>
             EduTrack
           </div>
-          <div style={{ fontSize: 11, color: '#64748B' }}>Student Management</div>
+          <div style={{ fontSize: 11, color: '#408A71' }}>Student Management</div>
         </div>
       </div>
 
@@ -224,7 +224,7 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
           fontSize: 10, fontWeight: 600,
           textTransform: 'uppercase', letterSpacing: '0.06em',
           padding: '3px 10px', borderRadius: 999,
-          background: '#DCFCE7', color: '#166534',
+          background: '#285A48', color: '#B0E4CC',
         }}>
           {role}
         </span>
@@ -246,12 +246,12 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
       {/* User footer */}
       <div style={{
         padding: '12px 16px',
-        borderTop: '1px solid #E2E8F0',
+        borderTop: '1px solid #285A48',
         display: 'flex', alignItems: 'center', gap: 10,
       }}>
         <div style={{
           width: 36, height: 36, borderRadius: '50%',
-          background: '#15803D', flexShrink: 0,
+          background: '#285A48', flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 13, fontWeight: 600, color: 'white',
         }}>
@@ -259,13 +259,13 @@ export default function Sidebar({ role, activePage, onNavigate, user, onLogout }
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{
-            fontSize: 13, fontWeight: 500, color: '#0F172A',
+            fontSize: 13, fontWeight: 500, color: '#B0E4CC',
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>
             {user?.name || 'User'}
           </div>
           <div style={{
-            fontSize: 11, color: '#64748B',
+            fontSize: 11, color: '#408A71',
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>
             {user?.email || ''}

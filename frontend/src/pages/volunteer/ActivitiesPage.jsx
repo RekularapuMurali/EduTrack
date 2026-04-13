@@ -3,7 +3,7 @@ import { Avatar, Button, Modal, Input, Select, Textarea, EmptyState, Spinner } f
 import { activityAPI, studentAPI } from '../../utils/api.js';
 
 const TYPE_CONFIG = {
-  tree_plantation:    { label: 'Tree Plantation',    icon: '🌱', color: '#166534', bg: '#DCFCE7' },
+  tree_plantation:    { label: 'Tree Plantation',    icon: '🌱', color: '#285A48', bg: '#E8F4F8' },
   recycling:          { label: 'Recycling',           icon: '♻️', color: '#1E40AF', bg: '#DBEAFE' },
   water_conservation: { label: 'Water Conservation', icon: '💧', color: '#0369A1', bg: '#E0F2FE' },
   energy_saving:      { label: 'Energy Saving',       icon: '⚡', color: '#92400E', bg: '#FEF3C7' },
@@ -96,7 +96,7 @@ export default function ActivitiesPage({ role }) {
         {[
           { icon: '🎯', value: activities.length, label: 'Total Activities',  bg: '#F1F5F9' },
           { icon: '⭐', value: totalPoints,        label: 'Total Points',      bg: '#FEF3C7' },
-          { icon: '✅', value: verified,           label: 'Verified',          bg: '#DCFCE7' },
+          { icon: '✅', value: verified,           label: 'Verified',          bg: '#E8F4F8' },
           { icon: '⏳', value: activities.length - verified, label: 'Pending', bg: '#FEE2E2' },
         ].map(s => (
           <div key={s.label} style={{ background: s.bg, borderRadius: 12, padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, border: '1px solid #E2E8F0' }}>
@@ -170,7 +170,7 @@ function ActivityCard({ activity: a, role, onVerify }) {
             <p style={{ fontSize: 11, color: cfg.color, margin: '2px 0 0' }}>{cfg.label}</p>
           </div>
         </div>
-        <span style={{ fontSize: 11, fontWeight: 500, padding: '2px 10px', borderRadius: 999, background: a.verified ? '#DCFCE7' : '#FEF3C7', color: a.verified ? '#166534' : '#92400E', whiteSpace: 'nowrap' }}>
+        <span style={{ fontSize: 11, fontWeight: 500, padding: '2px 10px', borderRadius: 999, background: a.verified ? '#E8F4F8' : '#FEF3C7', color: a.verified ? '#285A48' : '#92400E', whiteSpace: 'nowrap' }}>
           {a.verified ? '✓ Verified' : 'Pending'}
         </span>
       </div>
@@ -180,7 +180,7 @@ function ActivityCard({ activity: a, role, onVerify }) {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10, borderTop: '1px solid #F1F5F9' }}>
         <span style={{ fontSize: 11, color: '#94A3B8' }}>📅 {a.completedAt ? new Date(a.completedAt).toLocaleDateString() : '—'}</span>
-        <div><span style={{ fontSize: 15, fontWeight: 700, color: '#166534' }}>+{a.pointsEarned}</span><span style={{ fontSize: 11, color: '#94A3B8' }}> pts</span></div>
+        <div><span style={{ fontSize: 15, fontWeight: 700, color: '#285A48' }}>+{a.pointsEarned}</span><span style={{ fontSize: 11, color: '#94A3B8' }}> pts</span></div>
       </div>
       {!a.verified && role !== 'student' && (
         <VerifyBtn onClick={onVerify} />
@@ -193,7 +193,7 @@ function VerifyBtn({ onClick }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button onClick={onClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      style={{ width: '100%', marginTop: 10, padding: '7px 0', borderRadius: 8, border: 'none', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'background 0.15s', background: hovered ? '#BBF7D0' : '#DCFCE7', color: '#166534' }}>
+      style={{ width: '100%', marginTop: 10, padding: '7px 0', borderRadius: 8, border: 'none', fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'background 0.15s', background: hovered ? '#B0E4CC' : '#E8F4F8', color: '#285A48' }}>
       Verify Activity
     </button>
   );
@@ -204,7 +204,7 @@ function FilterPill({ label, value, active, onChange }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button onClick={() => onChange(value)} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      style={{ padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s', background: isActive ? '#DCFCE7' : (hovered ? '#F8FAFC' : '#FFFFFF'), color: isActive ? '#166534' : '#64748B', border: isActive ? '1px solid #86EFAC' : '1px solid #E2E8F0' }}>
+      style={{ padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 500, cursor: 'pointer', transition: 'all 0.15s', background: isActive ? '#E8F4F8' : (hovered ? '#F8FAFC' : '#FFFFFF'), color: isActive ? '#285A48' : '#64748B', border: isActive ? '1px solid #B0E4CC' : '1px solid #E2E8F0' }}>
       {label}
     </button>
   );

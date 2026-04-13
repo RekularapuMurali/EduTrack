@@ -32,7 +32,7 @@ export default function Topbar({ title, subtitle, actions }) {
     }}>
 
       <div>
-        <div style={{ fontSize: 16, fontWeight: 600, color: '#0F172A', lineHeight: 1.2 }}>{title}</div>
+        <div style={{ fontSize: 16, fontWeight: 600, color: '#091413', lineHeight: 1.2 }}>{title}</div>
         {subtitle && <div style={{ fontSize: 11, color: '#64748B' }}>{subtitle}</div>}
       </div>
 
@@ -45,8 +45,8 @@ export default function Topbar({ title, subtitle, actions }) {
             onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)}
             style={{
               fontSize: 13, padding: '7px 14px 7px 34px', borderRadius: 8, outline: 'none',
-              border: `1px solid ${searchFocused ? '#670D2F' : '#E2E8F0'}`,
-              background: '#F8FAFC', color: '#0F172A',
+              border: `1px solid ${searchFocused ? '#285A48' : '#E2E8F0'}`,
+              background: '#F8FAFC', color: '#091413',
               width: searchFocused ? 240 : 200, transition: 'all 0.2s',
             }}
           />
@@ -74,24 +74,24 @@ export default function Topbar({ title, subtitle, actions }) {
           {notifOpen && (
             <div style={{ position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: 300, background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 14, boxShadow: '0 8px 24px rgba(0,0,0,0.10)', zIndex: 50, overflow: 'hidden' }}>
               <div style={{ padding: '12px 16px', borderBottom: '1px solid #E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 13, fontWeight: 600, color: '#0F172A' }}>Notifications</span>
-                {unreadCount > 0 && <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 8px', borderRadius: 999, background: '#A53860', color: '#EF88AD' }}>{unreadCount} new</span>}
+                <span style={{ fontSize: 13, fontWeight: 600, color: '#091413' }}>Notifications</span>
+                {unreadCount > 0 && <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 8px', borderRadius: 999, background: '#408A71', color: '#B0E4CC' }}>{unreadCount} new</span>}
               </div>
               {NOTIFICATIONS.map((n, i) => (
                 <div key={n.id}
-                  style={{ padding: '12px 16px', display: 'flex', gap: 10, borderBottom: i < NOTIFICATIONS.length - 1 ? '1px solid #F1F5F9' : 'none', background: n.unread ? '#F8FFF9' : 'transparent', cursor: 'pointer' }}
-                  onMouseEnter={e => e.currentTarget.style.background = '#F8FAFC'}
-                  onMouseLeave={e => e.currentTarget.style.background = n.unread ? '#F8FFF9' : 'transparent'}
+                  style={{ padding: '12px 16px', display: 'flex', gap: 10, borderBottom: i < NOTIFICATIONS.length - 1 ? '1px solid #F1F5F9' : 'none', background: n.unread ? '#F0F8F5' : 'transparent', cursor: 'pointer' }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#F0F8F5'}
+                  onMouseLeave={e => e.currentTarget.style.background = n.unread ? '#F0F8F5' : 'transparent'}
                 >
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: n.unread ? '#EF88AD' : 'transparent', flexShrink: 0, marginTop: 4 }} />
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: n.unread ? '#B0E4CC' : 'transparent', flexShrink: 0, marginTop: 4 }} />
                   <div>
-                    <p style={{ fontSize: 12, color: '#0F172A', margin: 0, lineHeight: 1.4 }}>{n.text}</p>
+                    <p style={{ fontSize: 12, color: '#091413', margin: 0, lineHeight: 1.4 }}>{n.text}</p>
                     <p style={{ fontSize: 11, color: '#94A3B8', margin: '3px 0 0' }}>{n.time}</p>
                   </div>
                 </div>
               ))}
               <div style={{ padding: '10px 16px', borderTop: '1px solid #F1F5F9', textAlign: 'center' }}>
-                <button style={{ fontSize: 12, color: '#670D2F', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer' }}>
+                <button style={{ fontSize: 12, color: '#285A48', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer' }}>
                   View all notifications
                 </button>
               </div>
