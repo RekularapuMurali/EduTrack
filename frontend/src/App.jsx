@@ -14,6 +14,11 @@ import ActivitiesPage     from './pages/volunteer/ActivitiesPage';
 import SessionsPage       from './pages/volunteer/SessionsPage';
 import StudentDashboard   from './pages/student/StudentDashboard';
 
+import ReportsPage       from './pages/volunteer/ReportsPage.jsx';
+import AdminReportsPage  from './pages/admin/ReportsPage.jsx';
+import SettingsPage      from './pages/admin/SettingsPage.jsx';
+import ProfilePage       from './pages/student/ProfilePage.jsx';
+
 const PAGE_INFO = {
   dashboard:  { title: 'Dashboard',        sub: 'Overview of your organization'       },
   students:   { title: 'Students',         sub: 'Manage student profiles and records' },
@@ -34,6 +39,8 @@ function renderPage(page, role, user) {
     if (page === 'activities') return <ActivitiesPage role={role} />;
     if (page === 'sessions')   return <SessionsPage role={role} />;
     if (page === 'progress')   return <ProgressPage role={role} />;
+    if (page === 'reports')    return <AdminReportsPage />; 
+    if (page === 'settings')   return <SettingsPage user={user} />;
   }
   if (role === 'volunteer') {
     if (page === 'dashboard')  return <VolunteerDashboard user={user} />;
@@ -41,12 +48,14 @@ function renderPage(page, role, user) {
     if (page === 'progress')   return <ProgressPage role={role} />;
     if (page === 'activities') return <ActivitiesPage role={role} />;
     if (page === 'sessions')   return <SessionsPage role={role} />;
+    if (page === 'reports')    return <ReportsPage role={role} />; 
   }
   if (role === 'student') {
     if (page === 'dashboard')  return <StudentDashboard user={user} />;
     if (page === 'progress')   return <ProgressPage role={role} />;
     if (page === 'activities') return <ActivitiesPage role={role} />;
     if (page === 'sessions')   return <SessionsPage role={role} />;
+    if (page === 'profile')    return <ProfilePage user={user} />;
   }
   return <ComingSoon />;
 }
