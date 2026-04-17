@@ -49,7 +49,7 @@ export default function Signup() {
           <div style={{ marginBottom: 30 }}>
             <div style={{ fontSize: 14, fontWeight: 700, color: '#B0E4CC', marginBottom: 8 }}>Welcome to Visions India</div>
             <h1 style={{ fontSize: 38, fontWeight: 800, lineHeight: 1.05, marginBottom: 18 }}>Join the movement for community change.</h1>
-            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>Create an account as an admin, volunteer or student and start supporting projects that matter.</p>
+            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>Create an admin or volunteer account. Student accounts are created by your team.</p>
           </div>
           <div style={{ display: 'grid', gap: 16 }}>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
@@ -66,8 +66,13 @@ export default function Signup() {
 
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
         <div style={{ width: '100%', maxWidth: 420, background: 'white', borderRadius: 24, boxShadow: '0 22px 80px rgba(15,23,42,0.12)', padding: '32px 30px' }}>
-          <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 6 }}>Create a new account</h2>
-          <p style={{ color: '#64748B', fontSize: 13, marginBottom: 24 }}>Sign up and access your Visions India dashboard.</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+            <div>
+              <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 6 }}>Create a new account</h2>
+              <p style={{ color: '#64748B', fontSize: 13, margin: 0 }}>Sign up and access your Visions India dashboard.</p>
+            </div>
+            <Link to="/" style={{ color: '#285A48', fontWeight: 600, fontSize: 14 }}>Home</Link>
+          </div>
 
           {error && <div style={{ padding: '12px 14px', borderRadius: 12, background: '#FEE2E2', color: '#991B1B', marginBottom: 18 }}>{error}</div>}
 
@@ -77,7 +82,6 @@ export default function Signup() {
             <Input label="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Create a password" required autoComplete="new-password" />
             <Select label="Role" value={role} onChange={e => setRole(e.target.value)} options={[
               { value: 'volunteer', label: 'Volunteer' },
-              { value: 'student', label: 'Student' },
               { value: 'admin', label: 'Admin' },
             ]} required />
             <Button type="submit" variant="primary" disabled={loading}>{loading ? 'Creating account…' : 'Sign up'}</Button>

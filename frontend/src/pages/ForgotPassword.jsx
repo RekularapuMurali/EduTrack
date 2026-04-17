@@ -21,6 +21,9 @@ export default function ForgotPassword() {
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
         <div style={{ width: '100%', maxWidth: 420, background: 'white', borderRadius: 24, boxShadow: '0 22px 80px rgba(15,23,42,0.12)', padding: '32px 30px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
+            <Link to="/" style={{ color: '#285A48', fontWeight: 600, fontSize: 14 }}>Home</Link>
+          </div>
           {submitted ? (
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 28, marginBottom: 14 }}>📧</div>

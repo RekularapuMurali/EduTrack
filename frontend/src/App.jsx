@@ -56,15 +56,15 @@ export default function App() {
         <Route path="/" element={<ProtectedLayout user={user} logout={logout} />}>
           <Route path="dashboard" element={<DashboardPage user={user} />} />
           <Route path="projects" element={<ProjectListing />} />
-          <Route path="donate" element={<DonatePage />} />
+          <Route path="donate" element={user?.role === 'volunteer' ? <DonatePage /> : <Navigate to="/dashboard" replace />} />
           <Route path="stories" element={<ImpactStories />} />
-          <Route path="students" element={<StudentsPage role={user?.role} />} />
-          <Route path="volunteers" element={<VolunteersPage />} />
+          <Route path="students" element={user?.role === 'student' ? <Navigate to="/profile" replace /> : <StudentsPage role={user?.role} />} />
+          <Route path="volunteers" element={user?.role === 'student' ? <Navigate to="/dashboard" replace /> : <VolunteersPage />} />
           <Route path="activities" element={<ActivitiesPage role={user?.role} />} />
           <Route path="sessions" element={<SessionsPage role={user?.role} />} />
           <Route path="progress" element={<ProgressPage role={user?.role} />} />
-          <Route path="reports" element={user?.role === 'admin' ? <AdminReportsPage /> : <ReportsPage role={user?.role} />} />
-          <Route path="settings" element={<SettingsPage user={user} />} />
+          <Route path="reports" element={user?.role === 'student' ? <Navigate to="/dashboard" replace /> : (user?.role === 'admin' ? <AdminReportsPage /> : <ReportsPage role={user?.role} />)} />
+          <Route path="settings" element={user?.role === 'admin' ? <SettingsPage user={user} /> : <Navigate to="/dashboard" replace />} />
           <Route path="profile" element={<ProfilePage user={user} />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>

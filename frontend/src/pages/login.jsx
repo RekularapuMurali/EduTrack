@@ -52,9 +52,12 @@ export default function Login() {
 
       <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
         <div style={{ width: '100%', maxWidth: 420, background: 'white', borderRadius: 24, boxShadow: '0 24px 90px rgba(15, 23, 42, 0.12)', padding: 34 }}>
-          <div style={{ marginBottom: 28 }}>
-            <h2 style={{ fontSize: 28, fontWeight: 800, color: '#0F172A', marginBottom: 8 }}>Sign in to your account</h2>
-            <p style={{ fontSize: 14, color: '#64748B' }}>Use your Visions India credentials to continue.</p>
+          <div style={{ marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+            <div>
+              <h2 style={{ fontSize: 28, fontWeight: 800, color: '#0F172A', marginBottom: 8 }}>Sign in to your account</h2>
+              <p style={{ fontSize: 14, color: '#64748B' }}>Use your Visions India credentials to continue.</p>
+            </div>
+            <Link to="/" style={{ color: '#285A48', fontWeight: 600, fontSize: 14 }}>Home</Link>
           </div>
 
           {error && (

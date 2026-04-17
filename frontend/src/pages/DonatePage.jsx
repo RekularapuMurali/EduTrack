@@ -51,8 +51,8 @@ export default function DonatePage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 16 }}>
-              <Input label="Full name" value={name} onChange={e => setName(e.target.value)} placeholder="Your full name" required />
-              <Input label="Email address" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" required />
+              <Input label="Full name (optional)" value={name} onChange={e => setName(e.target.value)} placeholder="Your full name" />
+              <Input label="Email address (optional)" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" />
               <Select label="Contribution type" value={type} onChange={e => setType(e.target.value)} options={[
                 { value: 'money', label: 'Donate money' },
                 { value: 'time', label: 'Donate volunteer time' },
