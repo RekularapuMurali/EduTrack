@@ -191,7 +191,7 @@ function ModalCloseBtn({ onClick }) {
 }
 
 // ─── 7. INPUT ─────────────────────────────────────────────
-export function Input({ label, type = 'text', value, onChange, placeholder, required, disabled }) {
+export function Input({ label, type = 'text', value, onChange, placeholder, required, disabled, autoComplete }) {
   const [focused, setFocused] = useState(false);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -201,7 +201,7 @@ export function Input({ label, type = 'text', value, onChange, placeholder, requ
         </label>
       )}
       <input type={type} value={value} onChange={onChange} placeholder={placeholder}
-        required={required} disabled={disabled}
+        required={required} disabled={disabled} autoComplete={autoComplete}
         onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
         style={{
           fontSize: 13, padding: '8px 12px', borderRadius: 8, width: '100%',
