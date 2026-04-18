@@ -93,7 +93,7 @@ export default function ProfilePage({ user }) {
                 {user?.avatar || user?.name?.slice(0, 2).toUpperCase() || 'S'}
               </div>
               <div style={{ paddingBottom: 4 }}>
-                <h2 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A', margin: 0 }}>{user?.name}</h2>
+                <h2 style={{ fontSize: 22, fontWeight: 700, color: '#ffffff',paddingBottom: 20, margin: 0 }}>{user?.name}</h2>
                 <p style={{ fontSize: 13, color: '#64748B', margin: '2px 0 0' }}>
                   {profile?.grade || '—'} · {profile?.school || '—'}
                 </p>

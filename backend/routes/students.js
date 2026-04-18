@@ -52,16 +52,18 @@ router.get('/:id', protect, async (req, res) => {
 router.post('/', protect, authorize('admin', 'volunteer'), async (req, res) => {
   try {
     const {
-      name, email, password = 'password123',
+      name, email, password,
       grade, school, dateOfBirth, address,
       parentName, parentPhone, volunteerId, notes,
     } = req.body;
+
+    const initialPassword = password || 'password123';
 
     if (await User.findOne({ email })) {
       return res.status(400).json({ success: false, message: 'Email already registered' });
     }
 
-    const user = await User.create({ name, email, password, role: 'student' });
+    const user = await User.create({ name, email, password: initialPassword, role: 'student' });
 
     // Auto-assign to volunteer if they created this student
     let assignedVolunteer = volunteerId || undefined;
@@ -77,7 +79,14 @@ router.post('/', protect, authorize('admin', 'volunteer'), async (req, res) => {
     const populated = await Student.findById(student._id)
       .populate('user', 'name email').populate('volunteer', 'name email');
 
-    res.status(201).json({ success: true, data: populated });
+    res.status(201).json({
+      success: true,
+      data: populated,
+      login: {
+        email: user.email,
+        password: initialPassword,
+      },
+    });
   } catch (err) {
     if (err.name === 'ValidationError') {
       return res.status(400).json({ success: false, message: Object.values(err.errors)[0].message });

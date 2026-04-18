@@ -69,11 +69,11 @@ export default function Login() {
           <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 18 }}>
             <label style={{ display: 'grid', gap: 8, fontSize: 13, color: '#475569' }}>
               Email address
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ width: '100%', borderRadius: 12, border: '1px solid #E2E8F0', padding: '12px 14px', fontSize: 14, outline: 'none' }} />
+              <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ width: '100%', borderRadius: 12, border: '1px solid #E2E8F0', padding: '12px 14px', fontSize: 14, outline: 'none' }} />
             </label>
             <label style={{ display: 'grid', gap: 8, fontSize: 13, color: '#475569' }}>
               Password
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ width: '100%', borderRadius: 12, border: '1px solid #E2E8F0', padding: '12px 14px', fontSize: 14, outline: 'none' }} />
+              <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ width: '100%', borderRadius: 12, border: '1px solid #E2E8F0', padding: '12px 14px', fontSize: 14, outline: 'none' }} />
             </label>
             <button type="submit" disabled={loading} style={{ width: '100%', padding: '13px 0', borderRadius: 12, border: 'none', background: '#285A48', color: 'white', fontSize: 15, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', transition: 'background 0.2s ease' }}>
               {loading ? 'Signing in…' : 'Sign in'}

@@ -38,12 +38,11 @@ const assessmentSchema = new mongoose.Schema(
 );
 
 // Auto-calculate overall score
-assessmentSchema.pre('save', function (next) {
+assessmentSchema.pre('save', function () {
   if (this.subjects?.length > 0) {
     const total = this.subjects.reduce((sum, s) => sum + s.score, 0);
     this.overallScore = Math.round(total / this.subjects.length);
   }
-  next();
 });
 
 // One assessment per student per period

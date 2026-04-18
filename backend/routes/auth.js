@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
+const { protect } = require('../middleware/auth');
 
 // POST /api/auth/register
 router.post('/register', [
@@ -89,6 +90,22 @@ router.post('/login', [
     res.json({ token, user: user.toPublicJSON() });
   } catch (err) {
     console.error('Login error:', err.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// GET /api/auth/me
+router.get('/me', protect, async (req, res) => {
+  try {
+    let user = req.user.toObject();
+    if (user.role === 'student') {
+      const Student = require('../models/Student');
+      const student = await Student.findOne({ user: user._id });
+      user.studentProfile = student;
+    }
+    res.json({ user });
+  } catch (err) {
+    console.error('Me error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });

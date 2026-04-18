@@ -26,6 +26,7 @@ export default function StudentsPage({ role }) {
   const [viewStudent,setView]       = useState(null);
   const [saving,     setSaving]     = useState(false);
   const [apiError,   setApiError]   = useState('');
+  const [successText, setSuccessText] = useState('');
 
   const debouncedSearch = useDebounce(search, 300);
 
@@ -83,8 +84,11 @@ export default function StudentsPage({ role }) {
     }
     setSaving(true);
     setApiError('');
+    setSuccessText('');
     try {
-      await studentAPI.create(form);
+      const { data } = await studentAPI.create(form);
+      const loginInfo = data.login ? `Email: ${data.login.email} · Password: ${data.login.password}` : 'Please share the student login details.';
+      setSuccessText(`Student account created. ${loginInfo}`);
       setAddOpen(false);
       setForm({ name: '', email: '', grade: '', school: '', parentName: '', parentPhone: '', volunteerId: '' });
       await fetchStudents();
@@ -140,6 +144,12 @@ export default function StudentsPage({ role }) {
         </div>
       </div>
 
+      {successText && (
+        <div style={{ padding: '12px 14px', borderRadius: 14, background: '#DCFCE7', color: '#166534', fontSize: 13, border: '1px solid #BBF7D0' }}>
+          {successText}
+        </div>
+      )}
+
       {/* Table */}
       <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -177,6 +187,9 @@ export default function StudentsPage({ role }) {
             <Input label="Full Name" placeholder="Student name" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
             <Input label="Email" type="email" placeholder="student@email.com" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
           </div>
+          <p style={{ margin: 0, fontSize: 12, color: '#64748B' }}>
+            The student account will use this email to log in. If no password is supplied, the default password is <strong>password123</strong>.
+          </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <Select label="Grade" options={GRADE_OPTIONS} value={form.grade} onChange={e => setForm({ ...form, grade: e.target.value })} />
             <Input label="School" placeholder="School name" value={form.school} onChange={e => setForm({ ...form, school: e.target.value })} />

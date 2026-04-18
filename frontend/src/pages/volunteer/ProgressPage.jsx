@@ -65,7 +65,14 @@ export default function ProgressPage({ role }) {
   const barData   = latest?.subjects?.map(s => ({ subject: s.name, score: s.score })) || [];
 
   const handleAddAssessment = async () => {
-    if (!form.period) { setApiError('Period is required.'); return; }
+    if (!selectedId) {
+      setApiError('Please select a student before saving an assessment.');
+      return;
+    }
+    if (!form.period) {
+      setApiError('Period is required.');
+      return;
+    }
     setSaving(true);
     setApiError('');
     try {

@@ -51,12 +51,12 @@ export default function App() {
         <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <PublicLanding />} />
         <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <Login />} />
         <Route path="/signup" element={user ? <Navigate to="/dashboard" replace /> : <Signup />} />
-        <Route path="/forgot-password" element={user ? <Navigate to="/dashboard" replace /> : <ForgotPassword />} />
-
+        <Route path="/forgot-password" element={user ? <Navigate to="/dashboard" replace /> : <ForgotPassword />} />        <Route path="/donate" element={<DonatePage />} />
+        <Route path="/projects" element={<ProjectListing />} />
+        <Route path="/stories" element={<ImpactStories />} />
         <Route path="/" element={<ProtectedLayout user={user} logout={logout} />}>
           <Route path="dashboard" element={<DashboardPage user={user} />} />
           <Route path="projects" element={<ProjectListing />} />
-          <Route path="donate" element={user?.role === 'volunteer' ? <DonatePage /> : <Navigate to="/dashboard" replace />} />
           <Route path="stories" element={<ImpactStories />} />
           <Route path="students" element={user?.role === 'student' ? <Navigate to="/profile" replace /> : <StudentsPage role={user?.role} />} />
           <Route path="volunteers" element={user?.role === 'student' ? <Navigate to="/dashboard" replace /> : <VolunteersPage />} />

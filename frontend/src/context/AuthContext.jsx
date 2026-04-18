@@ -32,6 +32,12 @@ export function AuthProvider({ children }) {
     localStorage.setItem('user', JSON.stringify(userData));
   }, []);
 
+  // Update user data
+  const updateUser = useCallback((userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  }, []);
+
   // Clear everything on logout
   const logout = useCallback(() => {
     setUser(null);
@@ -42,7 +48,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{
-      user, token, loading, login, logout,
+      user, token, loading, login, logout, updateUser,
       isAdmin:     user?.role === 'admin',
       isVolunteer: user?.role === 'volunteer',
       isStudent:   user?.role === 'student',

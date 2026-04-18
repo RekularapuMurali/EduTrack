@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar } from 'recharts';
 import { Card, Badge, ProgressBar, Avatar, Spinner } from '../../components/ui/index.jsx';
 import { authAPI, assessmentAPI, activityAPI, sessionAPI } from '../../utils/api.js';
+import { useAuth } from '../../context/AuthContext';
 
 const ECO_LEVELS = [
   { name: 'Seedling', icon: '🌱', min: 0,   max: 100  },
@@ -13,6 +14,7 @@ const ECO_LEVELS = [
 const TYPE_ICON = { tree_plantation: '🌱', recycling: '♻️', water_conservation: '💧', energy_saving: '⚡', other: '🎯' };
 
 export default function StudentDashboard({ user }) {
+  const { updateUser } = useAuth();
   const [studentProfile, setProfile]     = useState(null);
   const [assessments,    setAssessments] = useState([]);
   const [activities,     setActivities]  = useState([]);
@@ -23,7 +25,9 @@ export default function StudentDashboard({ user }) {
     const fetchAll = async () => {
       try {
         const meRes = await authAPI.me();
-        const sp    = meRes.data.studentProfile;
+        const userData = meRes.data.user;
+        updateUser(userData); // Update the user in context
+        const sp    = userData.studentProfile;
         setProfile(sp);
 
         if (sp?._id) {
@@ -74,7 +78,7 @@ export default function StudentDashboard({ user }) {
               {user?.avatar || user?.name?.slice(0,2).toUpperCase() || 'AS'}
             </div>
             <div style={{ paddingBottom: 4 }}>
-              <h2 style={{ fontSize: 17, fontWeight: 700, color: '#091413', margin: 0 }}>{user?.name || 'Student'}</h2>
+              <h2 style={{ fontSize: 17, fontWeight: 700, color: '#ffffff', margin: 0 , paddingBottom: 4 }}>{user?.name || 'Student'}</h2>
               <p style={{ fontSize: 13, color: '#64748B', margin: '2px 0 0' }}>
                 {studentProfile?.grade || '—'} · {studentProfile?.school || '—'}
               </p>
