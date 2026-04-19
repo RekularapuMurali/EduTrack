@@ -1,136 +1,210 @@
 # EduTrack
 
-## Introduction
+EduTrack is a full-stack MERN application designed to streamline educational tracking and management. It features role-based authentication where admins oversee system operations, volunteers manage student data and activities, and students can monitor their progress and access reports. This platform aims to enhance educational initiatives by providing a centralized system for tracking student attendance, assessments, sessions, and overall progress.
 
-EduTrack is a comprehensive full-stack MERN (MongoDB, Express.js, React, Node.js) application designed to streamline educational management and tracking. It features role-based authentication, allowing administrators to oversee system operations, volunteers to manage student data and activities, and students to monitor their progress and reports. This platform aims to enhance educational experiences by providing a centralized system for tracking attendance, assessments, sessions, and overall student development.
+## 🎯 Key Features
 
-## Features
+1. **Responsive Landing Page**
+   - Introduction to EduTrack and its mission
+   - Overview of projects and impact
+   - Call-to-action buttons for getting involved and donations
 
-### Core Functionality
-- **Role-Based Access Control**: Secure authentication with distinct roles for Admin, Volunteer, and Student.
-- **Student Management**: Comprehensive tracking of student profiles, attendance, and progress.
-- **Activity and Session Tracking**: Volunteers can manage educational activities and sessions.
-- **Assessment System**: Tools for creating and managing student assessments.
-- **Reporting and Analytics**: Generate reports on student performance, attendance, and volunteer activities.
-- **Dashboard Views**: Customized dashboards for each user role with relevant data and actions.
+2. **User Authentication Module**
+   - Role-based access for Admin, Volunteer, and Student
+   - Secure login, signup, and password recovery
+   - JWT-based authentication
 
-### Admin Features
-- Manage system operations and settings.
-- Oversee students, volunteers, and reports.
-- Configure assessments and activities.
+3. **Dynamic Dashboards (Role-based)**
+   - **Admin Dashboard**: Manage users, approve activities, view analytics and reports
+   - **Volunteer Dashboard**: View and manage tasks, student data, sessions, and progress tracking
+   - **Student Dashboard**: Monitor personal progress, view assessments, and access reports
 
-### Volunteer Features
-- Handle student data and activities.
-- Track sessions and progress.
-- Generate and view reports.
+4. **Student Management**
+   - Comprehensive student profiles
+   - Attendance tracking
+   - Assessment management
+   - Progress monitoring
 
-### Student Features
-- View personal profile and dashboard.
-- Monitor progress and reports.
-- Access assessment results.
+5. **Activity and Session Management**
+   - Create and manage educational activities
+   - Schedule and track sessions
+   - Volunteer assignment to activities
 
-## Tech Stack
+6. **Reports and Analytics**
+   - Generate detailed reports for admins and volunteers
+   - Student progress analytics
+   - Impact measurement tools
 
-### Backend
-- **Node.js**: Server-side JavaScript runtime.
-- **Express.js**: Web application framework for Node.js.
-- **MongoDB**: NoSQL database for data storage.
-- **JWT**: JSON Web Tokens for authentication.
+7. **Donation and Support System**
+   - Secure donation forms
+   - Integration with payment gateways
+   - Volunteer time tracking
 
-### Frontend
-- **React**: JavaScript library for building user interfaces.
-- **Vite**: Fast build tool and development server.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
-- **Axios**: HTTP client for API requests.
+8. **Impact Stories and Media Gallery**
+   - Showcase success stories and testimonials
+   - Media upload and display functionality
+   - Performance-optimized gallery with lazy loading
 
-## Installation
+## 🧠 Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| **Frontend** | React.js with Vite |
+| **Backend** | Node.js with Express.js |
+| **Database** | MongoDB |
+| **Authentication** | JWT (JSON Web Tokens) |
+| **Styling** | TailwindCSS |
+| **State Management** | React Context API |
+| **API Calls** | Axios |
+| **Build Tool** | Vite |
+| **Linting** | ESLint |
+
+## 🛠️ Installation and Setup
 
 ### Prerequisites
-- Node.js (version 14 or higher)
-- MongoDB (local or cloud instance)
-- npm or yarn package manager
+- Node.js (v16 or higher)
+- MongoDB
+- npm or yarn
 
 ### Backend Setup
 1. Navigate to the backend directory:
-   ```
+   ```bash
    cd backend
    ```
+
 2. Install dependencies:
-   ```
+   ```bash
    npm install
    ```
-3. Set up environment variables by creating a `.env` file in the backend directory with the following:
-   ```
-   PORT=5000
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   ```
+
+3. Set up environment variables:
+   - Create a `.env` file in the backend directory
+   - Add necessary environment variables (e.g., MongoDB URI, JWT secret)
+
 4. Start the backend server:
-   ```
+   ```bash
    npm start
    ```
 
 ### Frontend Setup
 1. Navigate to the frontend directory:
-   ```
+   ```bash
    cd frontend
    ```
+
 2. Install dependencies:
-   ```
+   ```bash
    npm install
    ```
+
 3. Start the development server:
-   ```
+   ```bash
    npm run dev
    ```
 
-## Usage
+4. Open your browser and visit `http://localhost:5173` (default Vite port)
 
-1. Ensure both backend and frontend servers are running.
-2. Access the application at `http://localhost:5173` (default Vite port).
-3. Register or log in with appropriate credentials based on your role (Admin, Volunteer, or Student).
-4. Navigate through the dashboard to perform role-specific actions.
+## 📁 Project Structure
 
-## API Endpoints
+```
+EduTrack/
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   ├── middleware/
+│   │   └── auth.js
+│   ├── models/
+│   │   ├── Activity.js
+│   │   ├── Assessment.js
+│   │   ├── Attendance.js
+│   │   ├── Session.js
+│   │   ├── Student.js
+│   │   └── User.js
+│   ├── routes/
+│   │   ├── activities.js
+│   │   ├── assessments.js
+│   │   ├── auth.js
+│   │   ├── sessions.js
+│   │   ├── students.js
+│   │   └── users.js
+│   ├── package.json
+│   ├── server.js
+│   └── asmt.json
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   │   ├── Sidebar.jsx
+│   │   │   │   └── Topbar.jsx
+│   │   │   └── ui/
+│   │   │       └── index.jsx
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   ├── data/
+│   │   │   └── mockData.js
+│   │   ├── pages/
+│   │   │   ├── DonatePage.jsx
+│   │   │   ├── ForgotPassword.jsx
+│   │   │   ├── ImpactStories.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── ProjectListing.jsx
+│   │   │   ├── PublicLanding.jsx
+│   │   │   ├── Signup.jsx
+│   │   │   ├── admin/
+│   │   │   │   ├── AdminDashboard.jsx
+│   │   │   │   ├── ReportsPage.jsx
+│   │   │   │   ├── SettingsPage.jsx
+│   │   │   │   ├── StudentsPage.jsx
+│   │   │   │   └── VolunteersPage.jsx
+│   │   │   ├── student/
+│   │   │   │   ├── ProfilePage.jsx
+│   │   │   │   └── StudentDashboard.jsx
+│   │   │   └── volunteer/
+│   │   │       ├── ActivitiesPage.jsx
+│   │   │       ├── ProgressPage.jsx
+│   │   │       ├── ReportsPage.jsx
+│   │   │       ├── SessionsPage.jsx
+│   │   │       └── VolunteerDashboard.jsx
+│   │   ├── utils/
+│   │   │   └── api.js
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   ├── index.js
+│   │   └── main.jsx
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   └── vite.config.js
+├── LICENSE
+└── README.md
+```
 
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
+## 🚀 Usage
 
-### Students
-- `GET /api/students` - Get all students
-- `POST /api/students` - Add a new student
-- `PUT /api/students/:id` - Update student information
-- `DELETE /api/students/:id` - Delete a student
+1. **Admin Users**: Can access the admin dashboard to manage users, view reports, and oversee system operations.
 
-### Activities
-- `GET /api/activities` - Get all activities
-- `POST /api/activities` - Create a new activity
+2. **Volunteers**: Can log in to manage student data, track attendance, create assessments, and monitor student progress.
 
-### Assessments
-- `GET /api/assessments` - Get all assessments
-- `POST /api/assessments` - Create a new assessment
+3. **Students**: Can view their personal dashboard, check progress reports, and access assessment results.
 
-### Sessions
-- `GET /api/sessions` - Get all sessions
-- `POST /api/sessions` - Create a new session
+4. **Public Access**: Visitors can view the landing page, learn about the platform, and make donations.
 
-### Users
-- `GET /api/users` - Get all users
-- `PUT /api/users/:id` - Update user information
+## 🤝 Contributing
 
-## Contributing
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-1. Fork the repository.
-2. Create a new branch for your feature (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
-
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
+## 📞 Contact
 
-For questions or support, please contact the development team.
+For questions or support, please open an issue in this repository.
