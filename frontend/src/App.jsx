@@ -106,7 +106,7 @@ function DashboardPage({ user }) {
   return (
     <div style={{ padding: 24 }}>
       <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 18, padding: 32, maxWidth: 760, margin: '24px auto' }}>
-        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 12 }}>Welcome to Visions India</h2>
+        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 12 }}>Welcome to Edutrack</h2>
         <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.8 }}>This portal helps your team coordinate impact work across communities and projects.</p>
       </div>
     </div>
@@ -122,7 +122,7 @@ function LoadingScreen() {
           <path d="M12 14l6.16-3.422a12.083 12.083 0 0 1 .665 6.479A11.952 11.952 0 0 0 12 20.055a11.952 11.952 0 0 0-6.824-2.998 12.078 12.078 0 0 1 .665-6.479L12 14z"/>
         </svg>
       </div>
-      <p style={{ fontSize: 16, fontWeight: 600, color: '#091413' }}>Loading Visions India…</p>
+      <p style={{ fontSize: 16, fontWeight: 600, color: '#091413' }}>Loading Edutrack…</p>
       <div style={{ width: 24, height: 24, border: '2.5px solid #E2E8F0', borderTop: '2.5px solid #285A48', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>

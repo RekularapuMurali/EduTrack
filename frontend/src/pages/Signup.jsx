@@ -47,7 +47,7 @@ export default function Signup() {
       <div style={{ flex: 1.2, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'linear-gradient(160deg, #091413 0%, #285A48 100%)', color: 'white' }}>
         <div style={{ maxWidth: 420 }}>
           <div style={{ marginBottom: 30 }}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#B0E4CC', marginBottom: 8 }}>Welcome to Visions India</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: '#B0E4CC', marginBottom: 8 }}>Welcome to Edutrack</div>
             <h1 style={{ fontSize: 38, fontWeight: 800, lineHeight: 1.05, marginBottom: 18 }}>Join the movement for community change.</h1>
             <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>Create an admin or volunteer account. Student accounts are created by your team.</p>
           </div>
@@ -69,7 +69,7 @@ export default function Signup() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 18 }}>
             <div>
               <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 6 }}>Create a new account</h2>
-              <p style={{ color: '#64748B', fontSize: 13, margin: 0 }}>Sign up and access your Visions India dashboard.</p>
+              <p style={{ color: '#64748B', fontSize: 13, margin: 0 }}>Sign up and access your Edutrack dashboard.</p>
             </div>
             <Link to="/" style={{ color: '#285A48', fontWeight: 600, fontSize: 14 }}>Home</Link>
           </div>

@@ -1,0 +1,10 @@
+credentials
+admin :
+admin@edutrack.com
+volunteer :
+volunteer@edutrack.com
+student: their name 
+bob@gmail.com (their mail)
+
+password for all logins :
+password123

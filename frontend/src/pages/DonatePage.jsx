@@ -11,6 +11,17 @@ export default function DonatePage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [note, setNote] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardName, setCardName] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvv, setCardCvv] = useState('');
+  const [upiId, setUpiId] = useState('');
+  const [upiPhone, setUpiPhone] = useState('');
+  const [paypalEmail, setPaypalEmail] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [bankAccount, setBankAccount] = useState('');
+  const [ifscCode, setIfscCode] = useState('');
+  const [accountName, setAccountName] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [processing, setProcessing] = useState(false);
 
@@ -75,13 +86,118 @@ export default function DonatePage() {
                 { value: 'time', label: 'Donate volunteer time' },
               ]} required />
               {type === 'money' && (
-                <Select label="Payment method" value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)} options={[
-                  { value: 'credit_card', label: 'Credit Card' },
-                  { value: 'debit_card', label: 'Debit Card' },
-                  { value: 'upi', label: 'UPI' },
-                  { value: 'paypal', label: 'PayPal' },
-                  { value: 'bank_transfer', label: 'Bank Transfer' },
-                ]} required />
+                <>
+                  <Select label="Payment method" value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)} options={[
+                    { value: 'credit_card', label: 'Credit Card' },
+                    { value: 'debit_card', label: 'Debit Card' },
+                    { value: 'upi', label: 'UPI' },
+                    { value: 'paypal', label: 'PayPal' },
+                    { value: 'bank_transfer', label: 'Bank Transfer' },
+                  ]} required />
+
+                  {['credit_card', 'debit_card'].includes(paymentMethod) && (
+                    <>
+                      <Input
+                        label={`${paymentMethod === 'credit_card' ? 'Credit card' : 'Debit card'} number`}
+                        type="text"
+                        value={cardNumber}
+                        onChange={e => setCardNumber(e.target.value)}
+                        placeholder="1234 5678 9012 3456"
+                        maxLength={19}
+                      />
+                      <Input
+                        label="Cardholder name"
+                        type="text"
+                        value={cardName}
+                        onChange={e => setCardName(e.target.value)}
+                        placeholder="Name on card"
+                      />
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                        <Input
+                          label="Expiry date"
+                          type="text"
+                          value={cardExpiry}
+                          onChange={e => setCardExpiry(e.target.value)}
+                          placeholder="MM/YY"
+                        />
+                        <Input
+                          label="CVV"
+                          type="password"
+                          value={cardCvv}
+                          onChange={e => setCardCvv(e.target.value)}
+                          placeholder="123"
+                          maxLength={4}
+                        />
+                      </div>
+                    </>
+                  )}
+
+                  {paymentMethod === 'upi' && (
+                    <>
+                      <Input
+                        label="UPI ID"
+                        type="text"
+                        value={upiId}
+                        onChange={e => setUpiId(e.target.value)}
+                        placeholder="yourname@upi"
+                      />
+                      <Input
+                        label="UPI phone number"
+                        type="tel"
+                        value={upiPhone}
+                        onChange={e => setUpiPhone(e.target.value)}
+                        placeholder="+91 98765 43210"
+                      />
+                      <div style={{ padding: '14px 16px', background: '#F8FAFC', borderRadius: 12, border: '1px solid #E2E8F0' }}>
+                        <strong style={{ display: 'block', marginBottom: 8 }}>Scan with UPI app</strong>
+                        <p style={{ margin: 0, color: '#475569', fontSize: 14 }}>Open your UPI app and scan a QR code to complete payment instantly.</p>
+                      </div>
+                    </>
+                  )}
+
+                  {paymentMethod === 'paypal' && (
+                    <Input
+                      label="PayPal email"
+                      type="email"
+                      value={paypalEmail}
+                      onChange={e => setPaypalEmail(e.target.value)}
+                      placeholder="you@paypal.com"
+                    />
+                  )}
+
+                  {paymentMethod === 'bank_transfer' && (
+                    <>
+                      <Input
+                        label="Bank name"
+                        type="text"
+                        value={bankName}
+                        onChange={e => setBankName(e.target.value)}
+                        placeholder="Example Bank"
+                      />
+                      <Input
+                        label="Account number"
+                        type="text"
+                        value={bankAccount}
+                        onChange={e => setBankAccount(e.target.value)}
+                        placeholder="000123456789"
+                      />
+                      <Input
+                        label="IFSC code"
+                        type="text"
+                        value={ifscCode}
+                        onChange={e => setIfscCode(e.target.value)}
+                        placeholder="ABCD0123456"
+                      />
+                      <Input
+                        label="Account name"
+                        type="text"
+                        value={accountName}
+                        onChange={e => setAccountName(e.target.value)}
+                        placeholder="Your name as on account"
+                      />
+                    </>
+                  )}
+                </>
               )}
               <Textarea label="Message (optional)" value={note} onChange={e => setNote(e.target.value)} placeholder="Add a note for the team" rows={4} />
               <Button type="submit" variant="primary" disabled={processing}>

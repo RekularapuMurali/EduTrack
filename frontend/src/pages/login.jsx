@@ -30,7 +30,7 @@ export default function Login() {
     <div style={{ display: 'flex', minHeight: '100vh', background: '#F8FAFC' }}>
       <aside style={{ flex: 1.1, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'linear-gradient(160deg, #091413 0%, #285A48 100%)', color: 'white' }}>
         <div style={{ maxWidth: 440 }}>
-          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#B0E4CC', marginBottom: 14 }}>Visions India</div>
+          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#B0E4CC', marginBottom: 14 }}>Edutrack</div>
           <h1 style={{ fontSize: 42, fontWeight: 800, lineHeight: 1.05, marginBottom: 18 }}>Secure access for mission-driven teams.</h1>
           <p style={{ fontSize: 16, lineHeight: 1.8, color: 'rgba(255,255,255,0.82)', marginBottom: 30 }}>Sign in to coordinate volunteers, manage projects, and share impact stories across communities.</p>
           <div style={{ display: 'grid', gap: 14 }}>
@@ -55,7 +55,7 @@ export default function Login() {
           <div style={{ marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
             <div>
               <h2 style={{ fontSize: 28, fontWeight: 800, color: '#0F172A', marginBottom: 8 }}>Sign in to your account</h2>
-              <p style={{ fontSize: 14, color: '#64748B' }}>Use your Visions India credentials to continue.</p>
+              <p style={{ fontSize: 14, color: '#64748B' }}>Use your Edutrack credentials to continue.</p>
             </div>
             <Link to="/" style={{ color: '#285A48', fontWeight: 600, fontSize: 14 }}>Home</Link>
           </div>

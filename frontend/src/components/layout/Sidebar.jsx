@@ -200,7 +200,7 @@ export default function Sidebar({ role, user, onLogout }) {
         </div>
         <div>
           <div style={{ fontSize: 14, fontWeight: 700, color: '#B0E4CC', lineHeight: 1.2 }}>
-            Visions India
+            Edutrack
           </div>
           <div style={{ fontSize: 11, color: '#408A71' }}>Social Impact Portal</div>
         </div>
