@@ -1,12 +1,14 @@
+// VITE_API_URL is set in Vercel environment variables
+// Falls back to localhost for local development
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
-  timeout: 10000,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  timeout: 15000,
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Attach JWT to every request
+// Attach JWT to every request automatically
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
