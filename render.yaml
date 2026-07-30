@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: edutrack-backend
+    env: node
+    region: oregon
+    plan: free
+    rootDirectory: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://rekularapumurali_db_user:Qf5sjGv40fAsX6Jp@edutrack.vgs2paz.mongodb.net/edutrack?retryWrites=true&w=majority&appName=edutrack
+        sync: false
+      - key: JWT_SECRET
+        value: edutrack_super_secret_jwt_key_change_this_in_production
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
+        sync: false
+      - key: PORT
+        value: 5000
+        sync: false
+      - key: NODE_ENV
+        value: production
+        sync: false
+      - key: CLIENT_URL
+        value: https://edutrack.vercel.app
+        sync: false

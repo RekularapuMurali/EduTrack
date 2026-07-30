@@ -35,6 +35,10 @@ app.get('/', (req, res) => {
   res.json({ message: 'EduTrack API is running ✅', status: 'ok', env: process.env.NODE_ENV || 'development' });
 });
 
+app.get('/api', (req, res) => {
+  res.json({ message: 'EduTrack API gateway is available ✅', status: 'ok' });
+});
+
 // ── API Routes ────────────────────────────────────────────
 app.use('/api/auth',        require('./routes/auth'));
 app.use('/api/students',    require('./routes/students'));
