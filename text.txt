@@ -8,3 +8,13 @@ bob@gmail.com (their mail)
 
 password for all logins :
 password123
+
+Admin     → admin@edutrack.org  / password123
+  Volunteer → priya@edutrack.org  / password123
+  Student   → arjun@student.org   / password123
+
+mongodb deployment:
+project name : edutrack
+username : rekularapumurali_db_user
+password : Qf5sjGv40fAsX6Jp
+url : mongodb+srv://rekularapumurali_db_user:<db_password>@edutrack.vgs2paz.mongodb.net/?appName=edutrack

@@ -32,3 +32,4 @@ lerna-debug.log*
 .DS_Store
 # __ all text files are ignored, but we want to keep README.md and LICENSE
 *.txt
+.vercel
